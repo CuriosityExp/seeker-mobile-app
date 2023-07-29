@@ -10,7 +10,7 @@ import { Ionicons } from "@expo/vector-icons";
 
 export default function HomeScreen({ navigation }) {
   return (
-    <View className="flex-1 items-center bg-sky-500">
+    <View className="flex-1 items-center bg-white">
       <ScrollView>
         <Image
           className="mt-24"

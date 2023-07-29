@@ -8,6 +8,8 @@ import HomeScreen from "./src/views/HomeScreen";
 import ToDoScreen from "./src/views/ToDoScreen";
 import { Ionicons } from "@expo/vector-icons";
 import AccountScreen from "./src/views/AccountScreen";
+import { SafeAreaView } from "react-native";
+import AndroidSafeArea from "./src/components/AndroidSafeArea";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -36,9 +38,10 @@ function Root() {
           borderTopRightRadius: 60,
           borderBottomLeftRadius: 60,
           borderBottomRightRadius: 60,
-          height: 60,
+          height: 70,
           marginBottom: 20,
           padding: 10,
+          paddingBottom: 12,
           margin: 15,
           position: "absolute",
         },
@@ -57,14 +60,16 @@ function Root() {
 export default function App() {
   return (
     <>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="LandingScreen" component={LandingScreen} />
-          <Stack.Screen name="Login" component={LoginScreen} />
-          <Stack.Screen name="Register" component={RegisterScreen} />
-          <Stack.Screen name="Root" component={Root} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <SafeAreaView style={AndroidSafeArea.droidSafeArea}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="LandingScreen" component={LandingScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} />
+            <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Root" component={Root} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </SafeAreaView>
     </>
   );
 }
