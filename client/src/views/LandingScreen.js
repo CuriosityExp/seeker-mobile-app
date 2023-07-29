@@ -1,9 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import { Text, View, Image, ImageBackground, ScrollView } from "react-native";
+import {
+  Text,
+  View,
+  Image,
+  ImageBackground,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import React from "react";
 import Swiper from "react-native-swiper";
 
-export default function LandingScreen() {
+export default function LandingScreen({ navigation }) {
   return (
     <Swiper showsButtons={false} loop={false} showsPagination={false}>
       {/* ini slide 1 */}
@@ -17,13 +24,14 @@ export default function LandingScreen() {
           <View
             style={{
               flex: 1,
-              justifyContent: "center",
+              // justifyContent: "center",
               alignItems: "center",
               backgroundColor: "rgba(0, 0, 0, 0.6)",
               height: "100%",
             }}
           >
             <Image
+              className="mt-20"
               source={require("../../assets/seeker_white.png")}
               style={{ height: 350, width: 350 }}
             />
@@ -59,7 +67,6 @@ export default function LandingScreen() {
           <View
             style={{
               flex: 1,
-              // justifyContent: "center",
               alignItems: "center",
               backgroundColor: "rgba(0, 0, 0, 0.6)",
               height: "100%",
@@ -71,30 +78,30 @@ export default function LandingScreen() {
             />
             <Text
               style={{
-                marginBottom: 10,
+                marginBottom: 5,
                 fontSize: 30,
                 fontWeight: "bold",
                 color: "white",
               }}
             >
-              SEEKER:
+              About:
             </Text>
             <Text
               style={{
-                fontSize: 15,
+                fontSize: 17,
                 color: "white",
                 textAlign: "justify",
                 padding: 20,
               }}
             >
-              Lorem ipsum dolor sit amet. Ut porro cumque aut unde veniam et
-              quia quos in veniam possimus et dicta iusto et dolor
-              necessitatibus eum nesciunt dolorum? Id eveniet enim hic
-              aspernatur recusandae sed laudantium accusantium aut impedit nihil
-              est quia reprehenderit non quibusdam rerum nam magni ipsum. Sed
-              galisum repellat a magni eligendi id accusantium voluptates nam
-              voluptatem accusamus! Aut quidem impedit sed officia omnis et sint
-              dolores ut ipsa tempora et quod quia in perspiciatis quae!
+              Meet Seeker, your personalized job hunting companion! Powered by
+              cutting-edge AI technology, Seeker simplifies your job search by
+              presenting tailored job listings based on your qualifications and
+              aspirations. From crafting impressive resumes to providing
+              multiple to-do lists to increase your chances, Seeker is your
+              all-in-one assistant, guiding you towards your dream career. Get
+              ready to discover exciting opportunities and take the next leap in
+              your professional life with Seeker by your side.
             </Text>
           </View>
         </ImageBackground>
@@ -122,7 +129,7 @@ export default function LandingScreen() {
               source={require("../../assets/seeker_white.png")}
               style={{ height: 350, width: 350 }}
             />
-            <Text
+            {/* <Text
               style={{
                 marginBottom: 10,
                 fontSize: 30,
@@ -131,10 +138,27 @@ export default function LandingScreen() {
               }}
             >
               SEEKER:
+            </Text> */}
+            <Text
+              style={{
+                fontSize: 20,
+                color: "white",
+                textAlign: "justify",
+                padding: 28,
+              }}
+            >
+              Get the most out of the SEEKER app by creating or signing in to
+              your account now
             </Text>
-            <Text style={{ fontSize: 20, color: "white", textAlign: "center" }}>
-              Button button
-            </Text>
+            <TouchableOpacity
+              activeOpacity={0.8}
+              className="items-center rounded-xl p-4 bg-yellow-300 mt-40 px-24"
+              onPress={() => navigation.navigate("Login")}
+            >
+              <Text className="text-black text-lg font-extrabold">
+                Login/Register
+              </Text>
+            </TouchableOpacity>
           </View>
         </ImageBackground>
         <StatusBar style="auto" />
