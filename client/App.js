@@ -10,6 +10,10 @@ import { Ionicons } from "@expo/vector-icons";
 import AccountScreen from "./src/views/AccountScreen";
 import { SafeAreaView } from "react-native";
 import AndroidSafeArea from "./src/components/AndroidSafeArea";
+import SearchScreen from "./src/views/SearchScreen";
+import PersonalForm from "./src/views/PersonalForm";
+import EducationForm from "./src/views/EducationForm";
+import WorkForm from "./src/views/WorkForm";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -26,12 +30,14 @@ function Root() {
             iconName = focused ? "list" : "list-outline";
           } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
+          } else if (route.name === "Search") {
+            iconName = focused ? "search-circle" : "search-circle-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         headerShown: false,
-        tabBarActiveTintColor: "#000", // Color for the active tab icon and label
-        tabBarInactiveTintColor: "#888", // Color for inactive tab icons and labels
+        tabBarActiveTintColor: "#0B4F6C", // Color for the active tab icon and label
+        tabBarInactiveTintColor: "#000", // Color for inactive tab icons and labels
         tabBarStyle: {
           backgroundColor: "#ffde59",
           borderTopLeftRadius: 60,
@@ -53,6 +59,7 @@ function Root() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Todo" component={ToDoScreen} />
       <Tab.Screen name="Profile" component={AccountScreen} />
+      <Stack.Screen name="Search" component={SearchScreen} />
     </Tab.Navigator>
   );
 }
@@ -66,6 +73,10 @@ export default function App() {
             <Stack.Screen name="LandingScreen" component={LandingScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="ProfileForm" component={PersonalForm} />
+            <Stack.Screen name="EducationForm" component={EducationForm} />
+            <Stack.Screen name="WorkForm" component={WorkForm} />
+            {/* <Stack.Screen name="Search" component={SearchScreen} /> */}
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>

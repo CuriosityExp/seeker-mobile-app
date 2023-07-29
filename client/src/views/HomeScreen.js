@@ -24,7 +24,7 @@ export default function HomeScreen({ navigation }) {
           className="items-center"
           activeOpacity={0.8}
           // className="items-center bg-white rounded-2xl p-4"
-          onPress={() => navigation.navigate("Profile")}
+          onPress={() => navigation.navigate("Root", { screen: "Search" })}
         >
           <Ionicons name="finger-print" size={100} color="black" />
         </TouchableOpacity>
