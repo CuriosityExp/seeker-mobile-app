@@ -27,7 +27,7 @@ export default function SearchScreen({ navigation }) {
             />
           </View>
           <TouchableOpacity
-            onPress={() => console.log("nanti direct ke ai rec screen")}
+            onPress={() => navigation.navigate("AiJob")}
             className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12"
           >
             <View
@@ -49,7 +49,7 @@ export default function SearchScreen({ navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => console.log("nanti direct ke Scrap job list")}
+            onPress={() => navigation.navigate("Job")}
             className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12 items-end"
           >
             <View

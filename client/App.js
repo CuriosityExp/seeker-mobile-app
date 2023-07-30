@@ -15,6 +15,8 @@ import PersonalForm from "./src/views/PersonalForm";
 import EducationForm from "./src/views/EducationForm";
 import WorkForm from "./src/views/WorkForm";
 import BookmarkScreen from "./src/views/BookmarkScreen";
+import AllJobScreen from "./src/views/AllJobScreen";
+import AiJobScreen from "./src/views/AiJobScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -79,7 +81,8 @@ export default function App() {
             <Stack.Screen name="ProfileForm" component={PersonalForm} />
             <Stack.Screen name="EducationForm" component={EducationForm} />
             <Stack.Screen name="WorkForm" component={WorkForm} />
-            {/* <Stack.Screen name="Search" component={SearchScreen} /> */}
+            <Stack.Screen name="Job" component={AllJobScreen} />
+            <Stack.Screen name="AiJob" component={AiJobScreen} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>
