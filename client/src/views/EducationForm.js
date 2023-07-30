@@ -15,14 +15,19 @@ import DatePicker from "react-native-datepicker";
 import React, { useState } from "react";
 
 export default function EducationForm({ navigation }) {
-  const [university, setUniversity] = useState("");
-  const [degree, setDegree] = useState("");
-  const [field, setField] = useState("");
+  const [College, setCollege] = useState("");
+  const [educationalLevel, setEducationalLevel] = useState("");
+  const [Major, setMajor] = useState("");
+  const [startEducation, setStartEducation] = useState("");
+  const [graduateEducation, setGraduateEducation] = useState("");
 
   const handleSubmit = () => {
-    console.log("university:", university);
-    console.log("degree:", degree);
-    console.log("field:", field);
+    console.log("College:", College);
+    console.log("educationalLevel:", educationalLevel);
+    console.log("Major:", Major);
+    console.log("start:", startEducation);
+    console.log("graduate:", graduateEducation);
+    navigation.navigate("Root", { screen: "Profile" });
   };
 
   return (
@@ -35,32 +40,44 @@ export default function EducationForm({ navigation }) {
           <View className="items-center">
             <Image
               source={require("../../assets/seeker_black.png")}
-              style={{ height: 300, width: 300 }}
+              style={{ height: 180, width: 180 }}
             />
           </View>
-          <View className="">
+          <View className="mt-10">
             <TextInput
               className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
-              placeholder="School / University"
-              value={university}
-              onChangeText={setUniversity}
+              placeholder="College (ex: Universitas Brawijaya)"
+              value={College}
+              onChangeText={setCollege}
             />
             <TextInput
               className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
-              placeholder="Degree"
-              value={degree}
-              onChangeText={setDegree}
-              keyboardType="numeric"
+              placeholder="Degrees (ex: Bachelor's Degree)"
+              value={educationalLevel}
+              onChangeText={setEducationalLevel}
+              // keyboardType="numeric"
             />
             <TextInput
               className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
-              placeholder="Field of study"
-              value={field}
-              onChangeText={setField}
+              placeholder="Major (ex: International Relation)"
+              value={Major}
+              onChangeText={setMajor}
+            />
+            <TextInput
+              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
+              placeholder="Start (ex: 2018)"
+              value={startEducation}
+              onChangeText={setStartEducation}
+            />
+            <TextInput
+              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
+              placeholder="Graduate (ex: 2022) "
+              value={graduateEducation}
+              onChangeText={setGraduateEducation}
             />
             <TouchableOpacity
               activeOpacity={0.8}
-              className="items-center bg-yellow-300 rounded-xl p-4"
+              className="items-center bg-yellow-300 rounded-xl p-4 mt-5"
               onPress={handleSubmit}
             >
               <Text className="text-black text-md font-extrabold">Submit</Text>

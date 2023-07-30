@@ -1,5 +1,49 @@
 import { Image, Text, View, TouchableOpacity, ScrollView } from "react-native";
-import { Foundation, FontAwesome, Entypo, Feather } from "@expo/vector-icons";
+import {
+  Foundation,
+  FontAwesome,
+  Entypo,
+  Feather,
+  Ionicons,
+} from "@expo/vector-icons";
+
+const eduData = [
+  {
+    id: 1,
+    College: "University of Indonesia",
+    educationalLevel: "Bachelor's Degree",
+    startEducation: "2016",
+    graduateEducation: "2020",
+    Major: "International Relations",
+  },
+  {
+    id: 2,
+    College: "Harvard University",
+    educationalLevel: "Master's Degree",
+    startEducation: "2021",
+    graduateEducation: "2023",
+    Major: "Computer Science",
+  },
+];
+
+const workData = [
+  {
+    id: 1,
+    position: "SAP Consultant Trainee",
+    company: "PT. Seeker",
+    type: "Internship",
+    startWork: "2017",
+    stopWork: "2023",
+  },
+  {
+    id: 2,
+    position: "Software Engineer",
+    company: "ABC Tech Solutions",
+    type: "Internship",
+    startWork: "2017",
+    stopWork: "2023",
+  },
+];
 
 export default function AccountScreen({ navigation }) {
   return (
@@ -61,33 +105,91 @@ export default function AccountScreen({ navigation }) {
         {/* ini card work experience */}
         <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
           <Text className="mb-5 font-bold text-lg">Work experience:</Text>
-          <Text className="text-md">- SAP Consultant Trainee (PT. Seeker)</Text>
-          <Text className="text-md">- Internal Audit Staff (PT. Seeker)</Text>
+          {workData.map((work) => (
+            <View key={work.id} className="mb-4">
+              <Text className="font-bold">Position:</Text>
+              <Text className="mb-2">{work.position}</Text>
 
-          <TouchableOpacity
-            className="mt-10 items-end ml-10"
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate("WorkForm")}
-          >
-            <Feather name="edit" size={24} color="black" />
-          </TouchableOpacity>
+              <Text className="font-bold">Company:</Text>
+              <Text className="mb-2">{work.company}</Text>
+
+              <Text className="font-bold">Type:</Text>
+              <Text className="mb-2">{work.type}</Text>
+
+              <Text className="font-bold">Work period:</Text>
+              <Text>
+                {work.startWork} - {work.stopWork}
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <TouchableOpacity
+                  className="mt-2 items-end"
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate("WorkForm")}
+                >
+                  <Feather name="edit" size={20} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="mt-2 items-end ml-3"
+                  activeOpacity={0.8}
+                  onPress={() => console.log("button delete")}
+                >
+                  <Ionicons name="trash-outline" size={20} color="black" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
         </View>
 
         {/* ini card educational background */}
         <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12 mb-32">
           <Text className="mb-5 font-bold text-lg">
-            Last educational background:
+            Educational background:
           </Text>
-          <Text className="text-md">University of Indonesia</Text>
-          <Text className="text-md">Bachelor's Degree</Text>
-          <Text className="text-md">International Relations</Text>
-          <TouchableOpacity
-            className="mt-10 items-end ml-10"
-            activeOpacity={0.8}
-            onPress={() => navigation.navigate("EducationForm")}
-          >
-            <Feather name="edit" size={24} color="black" />
-          </TouchableOpacity>
+          {eduData.map((eduBackground) => (
+            <View key={eduBackground.id} className="mb-4">
+              <Text className="font-bold">University:</Text>
+              <Text className="mb-2">{eduBackground.College}</Text>
+
+              <Text className="font-bold">Degree:</Text>
+              <Text className="mb-2">{eduBackground.educationalLevel}</Text>
+
+              <Text className="font-bold">Field of Study:</Text>
+              <Text className="mb-2">{eduBackground.Major}</Text>
+              <Text className="font-bold">Study Period:</Text>
+              <Text>
+                {eduBackground.startEducation} -{" "}
+                {eduBackground.graduateEducation}
+              </Text>
+
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "flex-end",
+                }}
+              >
+                <TouchableOpacity
+                  className="mt-2 items-end"
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate("EducationForm")}
+                >
+                  <Feather name="edit" size={20} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="mt-2 items-end ml-3"
+                  activeOpacity={0.8}
+                  onPress={() => console.log("button delete")}
+                >
+                  <Ionicons name="trash-outline" size={20} color="black" />
+                </TouchableOpacity>
+              </View>
+            </View>
+          ))}
         </View>
       </ScrollView>
     </View>

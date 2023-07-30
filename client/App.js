@@ -14,6 +14,7 @@ import SearchScreen from "./src/views/SearchScreen";
 import PersonalForm from "./src/views/PersonalForm";
 import EducationForm from "./src/views/EducationForm";
 import WorkForm from "./src/views/WorkForm";
+import BookmarkScreen from "./src/views/BookmarkScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -28,10 +29,10 @@ function Root() {
             iconName = focused ? "home" : "home-outline";
           } else if (route.name === "Todo") {
             iconName = focused ? "list" : "list-outline";
+          } else if (route.name === "Bookmark") {
+            iconName = focused ? "bookmark" : "bookmark-outline";
           } else if (route.name === "Profile") {
             iconName = focused ? "person" : "person-outline";
-          } else if (route.name === "Search") {
-            iconName = focused ? "search-circle" : "search-circle-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -58,8 +59,8 @@ function Root() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Todo" component={ToDoScreen} />
+      <Tab.Screen name="Bookmark" component={BookmarkScreen} />
       <Tab.Screen name="Profile" component={AccountScreen} />
-      <Stack.Screen name="Search" component={SearchScreen} />
     </Tab.Navigator>
   );
 }
@@ -73,6 +74,8 @@ export default function App() {
             <Stack.Screen name="LandingScreen" component={LandingScreen} />
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
+            <Stack.Screen name="Search" component={SearchScreen} />
+
             <Stack.Screen name="ProfileForm" component={PersonalForm} />
             <Stack.Screen name="EducationForm" component={EducationForm} />
             <Stack.Screen name="WorkForm" component={WorkForm} />

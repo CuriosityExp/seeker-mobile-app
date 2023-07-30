@@ -17,10 +17,17 @@ import React, { useState } from "react";
 export default function WorkForm({ navigation }) {
   const [job, setJob] = useState("");
   const [company, setCompany] = useState("");
+  const [type, setType] = useState("");
+  const [startWork, setStartWork] = useState("");
+  const [stopWork, setStopWork] = useState("");
 
   const handleSubmit = () => {
     console.log("job:", job);
     console.log("company:", company);
+    console.log("type:", type);
+    console.log("start work:", startWork);
+    console.log("stop work:", stopWork);
+    navigation.navigate("Root", { screen: "Profile" });
   };
 
   return (
@@ -33,21 +40,39 @@ export default function WorkForm({ navigation }) {
           <View className="items-center">
             <Image
               source={require("../../assets/seeker_black.png")}
-              style={{ height: 300, width: 300 }}
+              style={{ height: 200, width: 200 }}
             />
           </View>
-          <View className="">
+          <View className="mt-10">
             <TextInput
               className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
-              placeholder="Job Name"
+              placeholder="Job Name (ex: Fullstack Developer)"
               value={job}
               onChangeText={setJob}
             />
             <TextInput
               className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
-              placeholder="Company Name"
+              placeholder="Company Name (ex: PT. ABC XYZ)"
               value={company}
               onChangeText={setCompany}
+            />
+            <TextInput
+              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
+              placeholder="Employment type (ex: Full-time)"
+              value={type}
+              onChangeText={setType}
+            />
+            <TextInput
+              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
+              placeholder="Start date (ex: 2018)"
+              value={startWork}
+              onChangeText={setStartWork}
+            />
+            <TextInput
+              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
+              placeholder="End date (ex: 2020)"
+              value={stopWork}
+              onChangeText={setStopWork}
             />
             <TouchableOpacity
               activeOpacity={0.8}
