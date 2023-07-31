@@ -13,6 +13,7 @@ import {
   Feather,
   Ionicons,
   AntDesign,
+  MaterialIcons,
 } from "@expo/vector-icons";
 
 const eduData = [
@@ -121,7 +122,7 @@ export default function AccountScreen({ navigation }) {
             activeOpacity={0.8}
             onPress={() => navigation.navigate("ProfileForm")}
           >
-            <Feather name="edit" size={24} color="black" />
+            <Feather name="edit" size={20} color="black" />
           </TouchableOpacity>
         </View>
 
@@ -154,6 +155,13 @@ export default function AccountScreen({ navigation }) {
                   className="mt-2 items-end"
                   activeOpacity={0.8}
                   onPress={() => navigation.navigate("WorkForm")}
+                >
+                  <Ionicons name="add-circle-outline" size={20} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="mt-2 items-end ml-3"
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate("EditWork")}
                 >
                   <Feather name="edit" size={20} color="black" />
                 </TouchableOpacity>
@@ -201,6 +209,13 @@ export default function AccountScreen({ navigation }) {
                   activeOpacity={0.8}
                   onPress={() => navigation.navigate("EducationForm")}
                 >
+                  <Ionicons name="add-circle-outline" size={24} color="black" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  className="mt-2 items-end ml-3"
+                  activeOpacity={0.8}
+                  onPress={() => navigation.navigate("EditEducation")}
+                >
                   <Feather name="edit" size={20} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity
@@ -214,18 +229,55 @@ export default function AccountScreen({ navigation }) {
             </View>
           ))}
         </View>
+
+        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
+          <Text className="font-bold">CV Link:</Text>
+        </View>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => console.log("handle cv")}
+          className="rounded-3xl p-5 w-10/12 mt-10 items-end"
+        >
+          <View
+            // className="mt-3"
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={{ fontSize: 20, color: "green" }}>Generate CV</Text>
+            <View style={{ marginLeft: 10 }}>
+              <Ionicons name="newspaper-outline" size={32} color="green" />
+            </View>
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={() => navigation.navigate("LandingScreen")}
-          className="mt-10 rounded-3xl p-5 w-10/12 mb-24 items-end"
+          className="rounded-3xl p-5 w-10/12 items-end"
         >
           <View
-            className="mt-3"
+            // className="mt-3"
             style={{ flexDirection: "row", alignItems: "center" }}
           >
-            <AntDesign name="logout" size={32} color="red" />
+            <Text style={{ fontSize: 20, color: "black" }}>Logout</Text>
             <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 20, color: "red" }}>Logout</Text>
+              <AntDesign name="logout" size={32} color="black" />
+            </View>
+          </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => console.log("destroy user")}
+          className="rounded-3xl p-5 w-10/12 mb-24 items-end"
+        >
+          <View
+            // className="mt-3"
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <Text style={{ fontSize: 20, color: "red" }}>Delete Account</Text>
+            <View style={{ marginLeft: 10 }}>
+              <MaterialIcons name="delete" size={32} color="red" />
             </View>
           </View>
         </TouchableOpacity>

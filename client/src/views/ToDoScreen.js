@@ -14,6 +14,7 @@ export default function ToDoScreen({ navigation, route }) {
   const { data } = route.params;
   console.log(data);
 
+  const [postedTodos, setPostedTodos] = useState(false);
   const [todoItem, setTodoItem] = useState("");
   const [todos, setTodos] = useState([
     { id: 1, text: "Complete homework", completed: false },
@@ -52,6 +53,10 @@ export default function ToDoScreen({ navigation, route }) {
 
   const handleRemoveTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
+  };
+
+  const handlePostTodos = () => {
+    setPostedTodos(!postedTodos);
   };
 
   const renderItem = ({ item }) => (
@@ -103,11 +108,32 @@ export default function ToDoScreen({ navigation, route }) {
           style={styles.list}
         />
       </View>
+      <TouchableOpacity
+        style={styles.postButton}
+        onPress={handlePostTodos}
+        disabled={postedTodos}
+      >
+        <Text style={styles.postButtonText}>
+          {postedTodos ? "Posted" : "Post Todos"}
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  postButton: {
+    backgroundColor: "#ffde59",
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 35,
+    marginTop: 20,
+  },
+  postButtonText: {
+    color: "black",
+    fontWeight: "bold",
+  },
   listContainer: {
     flex: 1,
     // marginBottom: 80,

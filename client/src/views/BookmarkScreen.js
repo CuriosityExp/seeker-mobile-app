@@ -125,7 +125,7 @@ export default function BookmarkScreen({ navigation }) {
           className="mb-32"
           data={bookmarkData}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
         />
       </View>
     </View>
