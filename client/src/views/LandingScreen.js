@@ -31,9 +31,9 @@ export default function LandingScreen({ navigation }) {
             }}
           >
             <Image
-              className="mt-20"
+              className="mt-40"
               source={require("../../assets/seeker_white.png")}
-              style={{ height: 350, width: 350 }}
+              style={{ height: 200, width: 200 }}
             />
             <Text
               style={{
@@ -41,6 +41,7 @@ export default function LandingScreen({ navigation }) {
                 fontSize: 20,
                 fontWeight: "bold",
                 color: "white",
+                marginTop: 70,
               }}
             >
               Hi There!
@@ -74,7 +75,7 @@ export default function LandingScreen({ navigation }) {
           >
             <Image
               source={require("../../assets/seeker_white.png")}
-              style={{ height: 350, width: 350 }}
+              style={{ height: 170, width: 170, marginTop: 160 }}
             />
             <Text
               style={{
@@ -127,7 +128,7 @@ export default function LandingScreen({ navigation }) {
           >
             <Image
               source={require("../../assets/seeker_white.png")}
-              style={{ height: 350, width: 350 }}
+              style={{ height: 170, width: 170, marginTop: 130 }}
             />
             {/* <Text
               style={{

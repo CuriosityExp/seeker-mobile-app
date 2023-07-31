@@ -33,7 +33,12 @@ export default function LoginScreen({ navigation }) {
           <View className="items-center">
             <Image
               source={require("../../assets/seeker_black.png")}
-              style={{ height: 300, width: 300 }}
+              style={{
+                height: 150,
+                width: 150,
+                marginBottom: 100,
+                marginTop: 50,
+              }}
             />
           </View>
           <View className="">

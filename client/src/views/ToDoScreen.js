@@ -94,7 +94,7 @@ export default function ToDoScreen({ navigation }) {
 const styles = StyleSheet.create({
   listContainer: {
     flex: 1,
-    marginBottom: 80,
+    // marginBottom: 80,
   },
   container: {
     flex: 1,

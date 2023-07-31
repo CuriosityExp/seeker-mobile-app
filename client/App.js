@@ -17,6 +17,7 @@ import WorkForm from "./src/views/WorkForm";
 import BookmarkScreen from "./src/views/BookmarkScreen";
 import AllJobScreen from "./src/views/AllJobScreen";
 import AiJobScreen from "./src/views/AiJobScreen";
+import AiRecScreen from "./src/views/AiRecScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -29,8 +30,8 @@ function Root() {
           let iconName;
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Todo") {
-            iconName = focused ? "list" : "list-outline";
+            // } else if (route.name === "Todo") {
+            //   iconName = focused ? "list" : "list-outline";
           } else if (route.name === "Bookmark") {
             iconName = focused ? "bookmark" : "bookmark-outline";
           } else if (route.name === "Profile") {
@@ -60,7 +61,7 @@ function Root() {
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
-      <Tab.Screen name="Todo" component={ToDoScreen} />
+      {/* <Tab.Screen name="Todo" component={ToDoScreen} /> */}
       <Tab.Screen name="Bookmark" component={BookmarkScreen} />
       <Tab.Screen name="Profile" component={AccountScreen} />
     </Tab.Navigator>
@@ -83,6 +84,8 @@ export default function App() {
             <Stack.Screen name="WorkForm" component={WorkForm} />
             <Stack.Screen name="Job" component={AllJobScreen} />
             <Stack.Screen name="AiJob" component={AiJobScreen} />
+            <Stack.Screen name="AiRec" component={AiRecScreen} />
+            <Stack.Screen name="Todo" component={ToDoScreen} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>

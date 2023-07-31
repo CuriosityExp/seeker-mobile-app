@@ -95,12 +95,23 @@ export default function AiJobScreen({ navigation }) {
   };
 
   const forceSwipe = (direction) => {
+    const x = direction === "right" ? -SCREEN_WIDTH : SCREEN_WIDTH;
+    Animated.timing(position, {
+      toValue: { x, y: 0 },
+      duration: SWIPE_OUT_DURATION,
+      useNativeDriver: false,
+    }).start(() => onSwipeComplete(direction));
+  };
+
+  const forceSwipe2 = (direction) => {
     const x = direction === "right" ? SCREEN_WIDTH : -SCREEN_WIDTH;
     Animated.timing(position, {
       toValue: { x, y: 0 },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: false,
     }).start(() => onSwipeComplete(direction));
+    console.log("add ke bookmark");
+    console.log(data[currentIndex]); // ini data percard
   };
 
   const onSwipeComplete = (direction) => {
@@ -113,7 +124,7 @@ export default function AiJobScreen({ navigation }) {
   const getCardStyle = () => {
     const rotate = position.x.interpolate({
       inputRange: [-SCREEN_WIDTH, 0, SCREEN_WIDTH],
-      outputRange: ["-30deg", "0deg", "30deg"],
+      outputRange: ["-30deg", "0deg", "30deg"], // Update this line
     });
 
     return {
@@ -145,22 +156,56 @@ export default function AiJobScreen({ navigation }) {
           ]}
         >
           <Image
-            style={{ width: 300, height: 150, borderRadius: 48, marginTop: 30 }}
+            style={{
+              width: 250,
+              height: 250,
+              borderRadius: 300,
+              marginTop: 30,
+            }}
             source={{ uri: job.logo }}
           />
-          <Text style={{ fontSize: 20, fontWeight: "bold", marginTop: 80 }}>
+          <Text
+            style={{
+              fontSize: 20,
+              fontWeight: "bold",
+              textAlign: "center",
+              marginTop: 20,
+              marginBottom: 20,
+            }}
+          >
             {job.jobTitle}
           </Text>
-          <Text style={{ fontSize: 14, color: "black" }}>
-            {job.companyName}
+          <Text style={{ fontSize: 14, color: "black", marginBottom: 5 }}>
+            Company: {job.companyName}
           </Text>
-          <Text style={{ fontSize: 14, color: "black", textAlign: "center" }}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: "black",
+              textAlign: "center",
+              marginBottom: 5,
+            }}
+          >
             Location: {job.companyLocation}
           </Text>
-          <Text style={{ fontSize: 14, color: "black", textAlign: "center" }}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: "black",
+              textAlign: "center",
+              marginBottom: 5,
+            }}
+          >
             Salary: {job.salary}
           </Text>
-          <Text style={{ fontSize: 14, color: "black", textAlign: "center" }}>
+          <Text
+            style={{
+              fontSize: 14,
+              color: "black",
+              textAlign: "center",
+              marginBottom: 5,
+            }}
+          >
             Experience: {job.workExperience}
           </Text>
           <Text
@@ -194,7 +239,7 @@ export default function AiJobScreen({ navigation }) {
                 borderRadius: 40,
                 marginTop: 16,
               }}
-              onPress={() => console.log("add ke bookmarks")}
+              onPress={() => forceSwipe2("right")}
             >
               <Foundation name="heart" size={48} color="red" />
             </TouchableOpacity>

@@ -1,6 +1,6 @@
-import { Image, Text, View, FlatList } from "react-native";
+import { Image, Text, View, FlatList, TouchableOpacity } from "react-native";
 
-export default function BookmarkScreen() {
+export default function BookmarkScreen({ navigation }) {
   const bookmarkData = [
     {
       id: "1",
@@ -36,79 +36,17 @@ export default function BookmarkScreen() {
       description:
         "In euismod nisi eget augue scelerisque, eu hendrerit sapien euismod.",
     },
-    {
-      id: "6",
-      title: "Job Title 6",
-      company: "Company F",
-      description:
-        "Curabitur fermentum lacus nec ligula venenatis, ut euismod metus tristique.",
-    },
-    {
-      id: "7",
-      title: "Job Title 7",
-      company: "Company G",
-      description:
-        "Aenean ultricies nibh ac erat egestas, non pharetra enim tincidunt.",
-    },
-    {
-      id: "8",
-      title: "Job Title 8",
-      company: "Company H",
-      description:
-        "Sed vel velit ut sem tristique condimentum sit amet eget orci.",
-    },
-    {
-      id: "9",
-      title: "Job Title 9",
-      company: "Company I",
-      description: "Mauris lacinia quam vel velit efficitur fermentum.",
-    },
-    {
-      id: "10",
-      title: "Job Title 10",
-      company: "Company J",
-      description: "Nam vel nisl eu nibh iaculis tempus.",
-    },
-    {
-      id: "11",
-      title: "Job Title 11",
-      company: "Company K",
-      description: "Fusce eget sem in libero hendrerit venenatis in in lorem.",
-    },
-    {
-      id: "12",
-      title: "Job Title 12",
-      company: "Company L",
-      description:
-        "Donec vel tellus ut dolor consequat tincidunt vel eu ligula.",
-    },
-    {
-      id: "13",
-      title: "Job Title 13",
-      company: "Company M",
-      description: "Pellentesque at magna eget neque fermentum auctor.",
-    },
-    {
-      id: "14",
-      title: "Job Title 14",
-      company: "Company N",
-      description: "Aliquam eu tortor a ligula elementum feugiat.",
-    },
-    {
-      id: "15",
-      title: "Job Title 15",
-      company: "Company O",
-      description:
-        "Duis fringilla ligula id nunc lacinia, eu viverra risus ultrices.",
-    },
   ];
 
   const renderItem = ({ item }) => (
-    <View className="bg-amber-300 rounded-3xl p-4 mb-4 shadow-md">
+    <TouchableOpacity
+      onPress={() => navigation.navigate("Todo")}
+      className="bg-amber-300 rounded-3xl p-4 mb-4 shadow-md"
+    >
       <Text className="text-lg font-semibold mb-2">{item.title}</Text>
       <Text className="text-black">{item.company}</Text>
       <Text className="text-sm text-black mt-2">{item.description}</Text>
-    </View>
+    </TouchableOpacity>
   );
 
   return (

@@ -31,6 +31,14 @@ export default function HomeScreen({ navigation }) {
         <Text className=" mt-5 text-center text-black text-xl">
           Getting started? tap here
         </Text>
+        <TouchableOpacity
+          className="items-center"
+          activeOpacity={0.8}
+          // className="items-center bg-white rounded-2xl p-4"
+          onPress={() => navigation.navigate("AiRec")}
+        >
+          <Text>new screen</Text>
+        </TouchableOpacity>
         <StatusBar style="auto" />
       </ScrollView>
     </View>

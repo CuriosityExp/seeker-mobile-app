@@ -5,6 +5,7 @@ import {
   Entypo,
   Feather,
   Ionicons,
+  AntDesign,
 } from "@expo/vector-icons";
 
 const eduData = [
@@ -147,7 +148,7 @@ export default function AccountScreen({ navigation }) {
         </View>
 
         {/* ini card educational background */}
-        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12 mb-32">
+        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
           <Text className="mb-5 font-bold text-lg">
             Educational background:
           </Text>
@@ -191,6 +192,21 @@ export default function AccountScreen({ navigation }) {
             </View>
           ))}
         </View>
+        <TouchableOpacity
+          activeOpacity={0.8}
+          onPress={() => navigation.navigate("LandingScreen")}
+          className="mt-10 rounded-3xl p-5 w-10/12 mb-24 items-end"
+        >
+          <View
+            className="mt-3"
+            style={{ flexDirection: "row", alignItems: "center" }}
+          >
+            <AntDesign name="logout" size={32} color="red" />
+            <View style={{ marginLeft: 10 }}>
+              <Text style={{ fontSize: 20, color: "red" }}>Logout</Text>
+            </View>
+          </View>
+        </TouchableOpacity>
       </ScrollView>
     </View>
   );

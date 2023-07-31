@@ -22,7 +22,7 @@ export default function RegisterScreen({ navigation }) {
     console.log("Email:", email);
     console.log("Username:", username);
     console.log("Password:", password);
-    navigation.navigate("Root", { screen: "Home" });
+    navigation.navigate("Login");
   };
 
   return (
@@ -35,7 +35,12 @@ export default function RegisterScreen({ navigation }) {
           <View className="items-center">
             <Image
               source={require("../../assets/seeker_black.png")}
-              style={{ height: 300, width: 300 }}
+              style={{
+                height: 150,
+                width: 150,
+                marginTop: 50,
+                marginBottom: 80,
+              }}
             />
           </View>
           <View className="">
