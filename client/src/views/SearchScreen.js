@@ -112,7 +112,7 @@ export default function SearchScreen({ navigation }) {
             onPress={() => navigation.navigate("AiRec")}
             className=" bg-amber-300 rounded-3xl p-5 w-10/12"
             style={{
-              marginBottom: 20,
+              marginBottom: 10,
             }}
           >
             <View
