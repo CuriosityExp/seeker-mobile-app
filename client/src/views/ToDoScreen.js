@@ -55,12 +55,15 @@ export default function ToDoScreen({ navigation }) {
   const renderItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleToggleTodo(item.id)}>
       <View style={[styles.todoItem, item.completed && styles.completedTodo]}>
-        <Text style={styles.todoText}>{item.text}</Text>
         {item.completed ? (
           <FontAwesome name="check-square-o" size={24} color="green" />
         ) : (
           <FontAwesome name="square-o" size={24} color="black" />
         )}
+        <Text style={styles.todoText}>{item.text}</Text>
+        <TouchableOpacity onPress={() => handleRemoveTodo(item.id)}>
+          <FontAwesome name="trash-o" size={24} color="red" />
+        </TouchableOpacity>
       </View>
     </TouchableOpacity>
   );
@@ -83,7 +86,7 @@ export default function ToDoScreen({ navigation }) {
         <FlatList
           data={todos}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.id}
           style={styles.list}
         />
       </View>
@@ -148,5 +151,6 @@ const styles = StyleSheet.create({
   },
   todoText: {
     flex: 1,
+    marginLeft: 10,
   },
 });
