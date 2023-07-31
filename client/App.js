@@ -20,6 +20,7 @@ import AiJobScreen from "./src/views/AiJobScreen";
 import AiRecScreen from "./src/views/AiRecScreen";
 import DetailScreen from "./src/views/DetailScreen";
 import DetailBookmarks from "./src/views/DetailBookmarks";
+import SectionScreen from "./src/views/SectionScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -89,6 +90,7 @@ export default function App() {
             <Stack.Screen name="Todo" component={ToDoScreen} />
             <Stack.Screen name="Detail" component={DetailScreen} />
             <Stack.Screen name="DetailBookmarks" component={DetailBookmarks} />
+            <Stack.Screen name="Section" component={SectionScreen} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>

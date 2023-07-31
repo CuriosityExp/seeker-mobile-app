@@ -5,7 +5,11 @@ import { WebView } from "react-native-webview";
 // ...
 export default function DetailScreen({ route }) {
   const { url, data } = route.params;
-  console.log(data);
+  // console.log(data);
+
+  function handlePostBookmarks() {
+    console.log("handle post bookmarks");
+  }
 
   return (
     <View style={{ flex: 1 }}>
@@ -30,6 +34,7 @@ export default function DetailScreen({ route }) {
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
         }}
+        onPress={() => handlePostBookmarks()}
       >
         <Text style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>
           Add to Bookmarks

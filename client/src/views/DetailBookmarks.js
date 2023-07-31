@@ -7,6 +7,10 @@ export default function DetailBookmarks({ route }) {
   const { url, data } = route.params;
   // console.log(data); // udah dapet datanya
 
+  function handleGenerateTodos() {
+    console.log("handle generate todos");
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <WebView source={{ uri: url }} style={{ flex: 1 }} />
@@ -30,6 +34,7 @@ export default function DetailBookmarks({ route }) {
           shadowOpacity: 0.25,
           shadowRadius: 3.84,
         }}
+        onPress={() => handleGenerateTodos()}
       >
         <Text style={{ color: "black", fontSize: 16, fontWeight: "bold" }}>
           Generate Todos
