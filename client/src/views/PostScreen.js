@@ -10,14 +10,14 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 
 export default function PostScreen() {
-  const [isLiked, setIsLiked] = useState(false);
-
-  const data = [
+  const [isLiked, setIsLiked] = useState("");
+  const [data, setData] = useState([
     {
       id: "1",
       profilePicture:
         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
       username: "User1",
+      isLiked: false,
       postContent:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
     },
@@ -26,6 +26,7 @@ export default function PostScreen() {
       profilePicture:
         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
       username: "User2",
+      isLiked: true,
       postContent:
         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
     },
@@ -34,6 +35,7 @@ export default function PostScreen() {
       profilePicture:
         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
       username: "User1",
+      isLiked: false,
       postContent:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
     },
@@ -42,6 +44,7 @@ export default function PostScreen() {
       profilePicture:
         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
       username: "User2",
+      isLiked: true,
       postContent:
         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
     },
@@ -50,6 +53,7 @@ export default function PostScreen() {
       profilePicture:
         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
       username: "User1",
+      isLiked: false,
       postContent:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
     },
@@ -58,17 +62,78 @@ export default function PostScreen() {
       profilePicture:
         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
       username: "User2",
+      isLiked: false,
       postContent:
         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
     },
-  ];
+  ]);
 
-  const handleLike = () => {
-    setIsLiked(!isLiked);
+  //   const data = [
+  //     {
+  //       id: "1",
+  //       profilePicture:
+  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
+  //       username: "User1",
+  //       isLiked: false,
+  //       postContent:
+  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
+  //     },
+  //     {
+  //       id: "2",
+  //       profilePicture:
+  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
+  //       username: "User2",
+  //       isLiked: true,
+  //       postContent:
+  //         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
+  //     },
+  //     {
+  //       id: "3",
+  //       profilePicture:
+  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
+  //       username: "User1",
+  //       isLiked: false,
+  //       postContent:
+  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
+  //     },
+  //     {
+  //       id: "4",
+  //       profilePicture:
+  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
+  //       username: "User2",
+  //       isLiked: true,
+  //       postContent:
+  //         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
+  //     },
+  //     {
+  //       id: "5",
+  //       profilePicture:
+  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
+  //       username: "User1",
+  //       isLiked: false,
+  //       postContent:
+  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
+  //     },
+  //     {
+  //       id: "6",
+  //       profilePicture:
+  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
+  //       username: "User2",
+  //       isLiked: false,
+  //       postContent:
+  //         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
+  //     },
+  //   ]
+
+  const handleLike = (postId) => {
+    setData((prevData) =>
+      prevData.map((post) =>
+        post.id === postId ? { ...post, isLiked: !post.isLiked } : post
+      )
+    );
   };
 
-  const CardPost = ({ profilePicture, username, postContent }) => {
-    // console.log(profilePicture);
+  const CardPost = ({ id, profilePicture, username, postContent, isLiked }) => {
     return (
       <View className="ml-3" style={styles.card}>
         <View style={styles.profileContainer}>
@@ -80,7 +145,7 @@ export default function PostScreen() {
         </View>
         <Text style={styles.postContent}>{postContent}</Text>
         <View style={styles.iconContainer}>
-          <TouchableOpacity style={styles.icon} onPress={handleLike}>
+          <TouchableOpacity style={styles.icon} onPress={() => handleLike(id)}>
             <Icon
               name={isLiked ? "heart" : "heart-o"}
               size={24}
@@ -102,9 +167,11 @@ export default function PostScreen() {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <CardPost
+            id={item.id}
             profilePicture={item.profilePicture}
             username={item.username}
             postContent={item.postContent}
+            isLiked={item.isLiked}
           />
         )}
       />
