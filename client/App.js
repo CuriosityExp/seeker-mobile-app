@@ -21,6 +21,7 @@ import AiRecScreen from "./src/views/AiRecScreen";
 import DetailScreen from "./src/views/DetailScreen";
 import DetailBookmarks from "./src/views/DetailBookmarks";
 import SectionScreen from "./src/views/SectionScreen";
+import TopupScreen from "./src/views/TopupScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -91,6 +92,7 @@ export default function App() {
             <Stack.Screen name="Detail" component={DetailScreen} />
             <Stack.Screen name="DetailBookmarks" component={DetailBookmarks} />
             <Stack.Screen name="Section" component={SectionScreen} />
+            <Stack.Screen name="Topup" component={TopupScreen} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>

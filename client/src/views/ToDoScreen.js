@@ -4,14 +4,16 @@ import {
   Text,
   View,
   TouchableOpacity,
-  ScrollView,
   TextInput,
   FlatList,
   StyleSheet,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
-export default function ToDoScreen({ navigation }) {
+export default function ToDoScreen({ navigation, route }) {
+  const { data } = route.params;
+  console.log(data);
+
   const [todoItem, setTodoItem] = useState("");
   const [todos, setTodos] = useState([
     { id: 1, text: "Complete homework", completed: false },
@@ -70,8 +72,19 @@ export default function ToDoScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>TODO List</Text>
-      <View style={styles.inputContainer}>
+      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+        <Text style={styles.header}>TODO List</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.balance}>Balance: 5</Text>
+          <FontAwesome name="star" size={24} color="green" />
+        </View>
+      </View>
+      <View style={styles.card}>
+        <Text style={styles.jobTitle}>{data.jobTitle}</Text>
+        <Text style={styles.companyName}>{data.companyName}</Text>
+        <Text style={styles.jobDescription}>{data.companyLocation}</Text>
+      </View>
+      {/* <View style={styles.inputContainer}>
         <TextInput
           style={styles.input}
           placeholder="Type a task..."
@@ -81,7 +94,7 @@ export default function ToDoScreen({ navigation }) {
         <TouchableOpacity style={styles.addButton} onPress={handleAddTodo}>
           <Text style={styles.addButtonText}>ADD</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <View style={styles.listContainer}>
         <FlatList
           data={todos}
@@ -107,7 +120,13 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 10,
+  },
+  balance: {
+    fontSize: 18,
+    color: "green",
     marginBottom: 20,
+    marginRight: 8,
   },
   inputContainer: {
     flexDirection: "row",
@@ -152,5 +171,27 @@ const styles = StyleSheet.create({
   todoText: {
     flex: 1,
     marginLeft: 10,
+  },
+  jobTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  companyName: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 5,
+  },
+  jobDescription: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  card: {
+    padding: 20,
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    marginBottom: 20,
+    borderWidth: 1,
+    borderColor: "#ccc",
   },
 });

@@ -1,4 +1,11 @@
-import { Image, Text, View, TouchableOpacity, ScrollView } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  TouchableOpacity,
+  ScrollView,
+  StyleSheet,
+} from "react-native";
 import {
   Foundation,
   FontAwesome,
@@ -62,10 +69,25 @@ export default function AccountScreen({ navigation }) {
             <Text className="text-center text-3xl font-medium">
               John Lorem Ipsum Doe Wosojugred
             </Text>
+            <View
+              className="justify-center mt-5"
+              style={{ flexDirection: "row" }}
+            >
+              <Text style={styles.balance}>My Balance: 5</Text>
+              <FontAwesome name="star" size={24} color="green" />
+            </View>
+            <View className="items-center">
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Topup")}
+                className="bg-green-600 w-32 p-3 items-center rounded-3xl"
+              >
+                <Text className="font-semibold">Topup Balance</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
         {/* ini card profile */}
-        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
+        <View className="mt-5 bg-amber-300 rounded-3xl p-5 w-10/12">
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Foundation name="mail" size={24} color="black" />
             <View style={{ marginLeft: 10 }}>
@@ -211,3 +233,12 @@ export default function AccountScreen({ navigation }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  balance: {
+    fontSize: 18,
+    color: "green",
+    marginBottom: 20,
+    marginRight: 8,
+  },
+});

@@ -90,7 +90,11 @@ export default function BookmarkScreen({ navigation }) {
         <TouchableOpacity
           className="mt-2 items-end ml-3"
           activeOpacity={0.8}
-          onPress={() => navigation.navigate("Todo")}
+          onPress={() =>
+            navigation.navigate("Todo", {
+              data: bookmarkData[index],
+            })
+          }
         >
           <FontAwesome5 name="clipboard-list" size={20} color="black" />
         </TouchableOpacity>
