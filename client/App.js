@@ -18,6 +18,8 @@ import BookmarkScreen from "./src/views/BookmarkScreen";
 import AllJobScreen from "./src/views/AllJobScreen";
 import AiJobScreen from "./src/views/AiJobScreen";
 import AiRecScreen from "./src/views/AiRecScreen";
+import DetailScreen from "./src/views/DetailScreen";
+import DetailBookmarks from "./src/views/DetailBookmarks";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -78,7 +80,6 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
             <Stack.Screen name="Search" component={SearchScreen} />
-
             <Stack.Screen name="ProfileForm" component={PersonalForm} />
             <Stack.Screen name="EducationForm" component={EducationForm} />
             <Stack.Screen name="WorkForm" component={WorkForm} />
@@ -86,6 +87,8 @@ export default function App() {
             <Stack.Screen name="AiJob" component={AiJobScreen} />
             <Stack.Screen name="AiRec" component={AiRecScreen} />
             <Stack.Screen name="Todo" component={ToDoScreen} />
+            <Stack.Screen name="Detail" component={DetailScreen} />
+            <Stack.Screen name="DetailBookmarks" component={DetailBookmarks} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>
