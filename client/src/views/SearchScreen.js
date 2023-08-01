@@ -134,7 +134,7 @@ export default function SearchScreen({ navigation }) {
             </View>
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate("Section")}
+            onPress={() => navigation.navigate("SearchJob")}
             className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12 items-end"
             style={{
               marginBottom: 50,

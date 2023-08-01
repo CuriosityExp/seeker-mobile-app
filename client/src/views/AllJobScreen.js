@@ -10,8 +10,11 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
-export default function SearchScreen({ navigation }) {
-  const [searchText, setSearchText] = useState("");
+export default function SearchScreen({ navigation, route }) {
+  const { keyword } = route.params;
+  console.log(keyword);
+
+  // const [searchText, setSearchText] = useState("");
   const [data, setData] = useState([]);
 
   let dummyData = [
@@ -91,13 +94,13 @@ export default function SearchScreen({ navigation }) {
     setData(dummyData);
   }, []);
 
-  const handleSearch = () => {
-    const filteredData = dummyData.filter((item) =>
-      item.jobTitle.toLowerCase().includes(searchText.toLowerCase())
-    );
+  // const handleSearch = () => {
+  //   const filteredData = dummyData.filter((item) =>
+  //     item.jobTitle.toLowerCase().includes(searchText.toLowerCase())
+  //   );
 
-    setData(filteredData);
-  };
+  //   setData(filteredData);
+  // };
 
   const renderItem = ({ item, index }) => (
     <View style={styles.card}>
@@ -125,7 +128,7 @@ export default function SearchScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
+      {/* <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchBar}
           placeholder="Search..."
@@ -135,7 +138,7 @@ export default function SearchScreen({ navigation }) {
         <TouchableOpacity style={styles.searchButton} onPress={handleSearch}>
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       <FlatList
         data={data}
         renderItem={renderItem}

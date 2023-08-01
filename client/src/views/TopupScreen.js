@@ -25,7 +25,7 @@ export default function TopupScreen({ navigation }) {
     if (selectedToken) {
       inputToken = selectedToken;
     } else if (customToken) {
-      inputToken = parseInt(customToken);
+      inputToken = customToken;
     }
 
     if (inputToken) {

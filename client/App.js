@@ -25,6 +25,7 @@ import TopupScreen from "./src/views/TopupScreen";
 import EditEducation from "./src/views/EditEducation";
 import EditWork from "./src/views/EditWork";
 import PostScreen from "./src/views/PostScreen";
+import SearchJob from "./src/views/SearchJob";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -41,10 +42,10 @@ function Root() {
             //   iconName = focused ? "list" : "list-outline";
           } else if (route.name === "Bookmark") {
             iconName = focused ? "bookmark" : "bookmark-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "person" : "person-outline";
           } else if (route.name === "Post") {
             iconName = focused ? "ios-paper-plane" : "ios-paper-plane-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "person" : "person-outline";
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -71,8 +72,8 @@ function Root() {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Bookmark" component={BookmarkScreen} />
-      <Tab.Screen name="Profile" component={AccountScreen} />
       <Tab.Screen name="Post" component={PostScreen} />
+      <Tab.Screen name="Profile" component={AccountScreen} />
     </Tab.Navigator>
   );
 }
@@ -100,6 +101,7 @@ export default function App() {
             <Stack.Screen name="Topup" component={TopupScreen} />
             <Stack.Screen name="EditWork" component={EditWork} />
             <Stack.Screen name="EditEducation" component={EditEducation} />
+            <Stack.Screen name="SearchJob" component={SearchJob} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>

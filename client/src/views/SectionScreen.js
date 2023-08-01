@@ -1,7 +1,10 @@
 import { Image, Text, View, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-export default function SectionScreen({ navigation }) {
+export default function SectionScreen({ navigation, route }) {
+  const { keyword } = route.params;
+  console.log(keyword);
+
   const data = [
     {
       id: 1,
@@ -22,7 +25,7 @@ export default function SectionScreen({ navigation }) {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate("Job")}
+      onPress={() => navigation.navigate("Job", { keyword: keyword })}
       className="bg-amber-300 rounded-3xl p-4 mb-7 shadow-md"
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
@@ -45,7 +48,7 @@ export default function SectionScreen({ navigation }) {
       <View className="flex-row items-center mb-4">
         <Text className="text-red-500 text-xl mr-2">🔖</Text>
         <Text className="text-xl font-semibold">
-          Choose your preferences site
+          Choose your preferred site
         </Text>
       </View>
       <View className="mt-48">
