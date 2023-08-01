@@ -12,18 +12,31 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+import axios from "axios";
+
+const baseUrl = "https://4edb-2a09-bac1-3480-18-00-279-49.ngrok-free.app";
 
 export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    console.log("Email:", email);
-    console.log("Username:", username);
-    console.log("Password:", password);
-    navigation.navigate("Login");
-  };
+  async function Register() {
+    try {
+      await axios({
+        method: "post",
+        url: `${baseUrl}/register`,
+        data: {
+          email: email,
+          username: username,
+          password: password,
+        },
+      });
+      navigation.navigate("Login");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -67,7 +80,7 @@ export default function RegisterScreen({ navigation }) {
             <TouchableOpacity
               activeOpacity={0.8}
               className="items-center bg-yellow-300 rounded-xl p-4"
-              onPress={handleSubmit}
+              onPress={Register}
             >
               <Text className="text-black text-md font-extrabold">
                 Register

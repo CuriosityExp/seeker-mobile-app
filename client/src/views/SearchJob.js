@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 15,
-    marginTop: 4,
+    marginTop: 5,
     // height: 45,
     justifyContent: "center",
   },

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { WebView } from "react-native-webview";
 
 // ...
 export default function DetailScreen({ route }) {
   const { url, data } = route.params;
-  // console.log(data);
+  console.log(data);
 
   function handlePostBookmarks() {
     console.log("handle post bookmarks");

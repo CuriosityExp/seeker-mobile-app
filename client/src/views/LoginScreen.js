@@ -12,16 +12,42 @@ import {
   Image,
 } from "react-native";
 import React, { useState } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const baseUrl = "https://4edb-2a09-bac1-3480-18-00-279-49.ngrok-free.app";
 
 export default function LoginScreen({ navigation }) {
   let [username, setUsername] = useState("");
   let [password, setPassword] = useState("");
 
-  const handleSubmit = () => {
-    console.log("Username:", username);
-    console.log("Password:", password);
-    navigation.navigate("Root", { screen: "Home" });
-  };
+  // const handleSubmit = () => {
+  //   console.log("Username:", username);
+  //   console.log("Password:", password);
+  //   navigation.navigate("Root", { screen: "Home" });
+  // };
+
+  async function Login() {
+    try {
+      const { data } = await axios({
+        method: "post",
+        url: `${baseUrl}/login`,
+        data: {
+          username: username,
+          password: password,
+        },
+      });
+      console.log(data);
+      if (data.access_token) {
+        await AsyncStorage.setItem("access_token", data.access_token);
+        console.log("Username:", username);
+        console.log("Password:", password);
+        navigation.navigate("Root", { screen: "Home" });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -58,7 +84,7 @@ export default function LoginScreen({ navigation }) {
             <TouchableOpacity
               activeOpacity={0.8}
               className="items-center bg-yellow-300 rounded-xl p-4"
-              onPress={handleSubmit}
+              onPress={Login}
             >
               <Text className="text-black text-md font-extrabold">Login</Text>
             </TouchableOpacity>

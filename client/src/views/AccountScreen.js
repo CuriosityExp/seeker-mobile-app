@@ -15,6 +15,10 @@ import {
   AntDesign,
   MaterialIcons,
 } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import axios from "axios";
+const baseUrl = "https://4edb-2a09-bac1-3480-18-00-279-49.ngrok-free.app";
 
 const eduData = [
   {
@@ -55,235 +59,278 @@ const workData = [
 ];
 
 export default function AccountScreen({ navigation }) {
-  return (
-    <View className="flex-1 bg-white">
-      <ScrollView contentContainerStyle={{ alignItems: "center" }}>
-        <View className="flex items-center">
-          <Image
-            className="mt-10"
-            source={{
-              uri: "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-            }}
-            style={{ height: 100, width: 100, borderRadius: 300 }}
-          />
-          <View className="mt-5">
-            <Text className="text-center text-3xl font-medium">
-              John Lorem Ipsum Doe Wosojugred
-            </Text>
+  const [profile, setProfile] = useState("");
+  const [loading, setLoading] = useState(true);
+  console.log(profile);
+
+  function Logout() {
+    try {
+      AsyncStorage.clear();
+      navigation.navigate("LandingScreen");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getData(id) {
+    try {
+      const { data } = await axios.get(`${baseUrl}/users/${id}`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      setProfile(data);
+      setLoading(false);
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  } else {
+    return (
+      <View className="flex-1 bg-white">
+        <ScrollView contentContainerStyle={{ alignItems: "center" }}>
+          <View className="flex items-center">
+            <Image
+              className="mt-10"
+              source={{
+                uri: profile?.Profile?.photoUrl,
+              }}
+              style={{ height: 100, width: 100, borderRadius: 300 }}
+            />
+            <View className="mt-5">
+              <Text className="text-center text-3xl font-medium">
+                {profile?.Profile.fullName}
+              </Text>
+              <View
+                className="justify-center mt-5"
+                style={{ flexDirection: "row" }}
+              >
+                <Text style={styles.balance}>My Balance: 5</Text>
+                <FontAwesome name="star" size={24} color="green" />
+              </View>
+              <View className="items-center">
+                <TouchableOpacity
+                  onPress={() => navigation.navigate("Topup")}
+                  className="bg-green-600 w-32 p-3 items-center rounded-3xl"
+                >
+                  <Text className="font-semibold">Topup Balance</Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+          {/* ini card profile */}
+          <View className="mt-5 bg-amber-300 rounded-3xl p-5 w-10/12">
+            <View style={{ flexDirection: "row", alignItems: "center" }}>
+              <Foundation name="mail" size={24} color="black" />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={{ fontSize: 14, color: "black" }}>
+                  {profile?.email}
+                </Text>
+              </View>
+            </View>
             <View
-              className="justify-center mt-5"
-              style={{ flexDirection: "row" }}
+              className="mt-3"
+              style={{ flexDirection: "row", alignItems: "center" }}
             >
-              <Text style={styles.balance}>My Balance: 5</Text>
-              <FontAwesome name="star" size={24} color="green" />
+              <FontAwesome name="phone" size={24} color="black" />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={{ fontSize: 14, color: "black" }}>
+                  {profile?.Profile.phoneNumber}
+                </Text>
+              </View>
             </View>
-            <View className="items-center">
-              <TouchableOpacity
-                onPress={() => navigation.navigate("Topup")}
-                className="bg-green-600 w-32 p-3 items-center rounded-3xl"
-              >
-                <Text className="font-semibold">Topup Balance</Text>
-              </TouchableOpacity>
+            <View
+              className="mt-3"
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Entypo name="location-pin" size={24} color="black" />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={{ fontSize: 14, color: "black" }}>
+                  {profile?.Profile.domisili}
+                </Text>
+              </View>
             </View>
+            <TouchableOpacity
+              className="mt-10 items-end ml-10"
+              activeOpacity={0.8}
+              onPress={() => navigation.navigate("ProfileForm")}
+            >
+              <Feather name="edit" size={20} color="black" />
+            </TouchableOpacity>
           </View>
-        </View>
-        {/* ini card profile */}
-        <View className="mt-5 bg-amber-300 rounded-3xl p-5 w-10/12">
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Foundation name="mail" size={24} color="black" />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 14, color: "black" }}>
-                john.doe@example.com
-              </Text>
-            </View>
+
+          {/* ini card work experience */}
+          <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
+            <Text className="mb-5 font-bold text-lg">Work experience:</Text>
+            {profile.Profile.WorkExperiences.map((work) => (
+              <View key={work.id} className="mb-4">
+                <Text className="font-bold">Position:</Text>
+                <Text className="mb-2">{work.position}</Text>
+
+                <Text className="font-bold">Company:</Text>
+                <Text className="mb-2">{work.company}</Text>
+
+                <Text className="font-bold">Type:</Text>
+                <Text className="mb-2">{work.type}</Text>
+
+                <Text className="font-bold">Work period:</Text>
+                <Text>
+                  {work.startWork} - {work.stopWork}
+                </Text>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <TouchableOpacity
+                    className="mt-2 items-end"
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate("WorkForm")}
+                  >
+                    <Ionicons
+                      name="add-circle-outline"
+                      size={20}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="mt-2 items-end ml-3"
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate("EditWork")}
+                  >
+                    <Feather name="edit" size={20} color="black" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="mt-2 items-end ml-3"
+                    activeOpacity={0.8}
+                    onPress={() => console.log("button delete")}
+                  >
+                    <Ionicons name="trash-outline" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
           </View>
-          <View
-            className="mt-3"
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <FontAwesome name="phone" size={24} color="black" />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 14, color: "black" }}>085111144558</Text>
-            </View>
+
+          {/* ini card educational background */}
+          <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
+            <Text className="mb-5 font-bold text-lg">
+              Educational background:
+            </Text>
+            {profile.Profile.Education.map((el) => (
+              <View key={el.id} className="mb-4">
+                <Text className="font-bold">University:</Text>
+                <Text className="mb-2">{el.College}</Text>
+
+                <Text className="font-bold">Degree:</Text>
+                <Text className="mb-2">{el.educationalLevel}</Text>
+
+                <Text className="font-bold">Field of Study:</Text>
+                <Text className="mb-2">{el.Major}</Text>
+                <Text className="font-bold">Study Period:</Text>
+                <Text>
+                  {el.startEducation} - {el.graduatedEducation}
+                </Text>
+
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <TouchableOpacity
+                    className="mt-2 items-end"
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate("EducationForm")}
+                  >
+                    <Ionicons
+                      name="add-circle-outline"
+                      size={24}
+                      color="black"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="mt-2 items-end ml-3"
+                    activeOpacity={0.8}
+                    onPress={() => navigation.navigate("EditEducation")}
+                  >
+                    <Feather name="edit" size={20} color="black" />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    className="mt-2 items-end ml-3"
+                    activeOpacity={0.8}
+                    onPress={() => console.log("button delete")}
+                  >
+                    <Ionicons name="trash-outline" size={20} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </View>
+            ))}
           </View>
-          <View
-            className="mt-3"
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <Entypo name="location-pin" size={24} color="black" />
-            <View style={{ marginLeft: 10 }}>
-              <Text style={{ fontSize: 14, color: "black" }}>
-                Magelang, Jawa Tengah
-              </Text>
-            </View>
+
+          <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
+            <Text className="font-bold">CV Link:</Text>
           </View>
+
           <TouchableOpacity
-            className="mt-10 items-end ml-10"
             activeOpacity={0.8}
-            onPress={() => navigation.navigate("ProfileForm")}
+            onPress={() => console.log("handle cv")}
+            className="rounded-3xl p-5 w-10/12 mt-10 items-end"
           >
-            <Feather name="edit" size={20} color="black" />
+            <View
+              // className="mt-3"
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text style={{ fontSize: 20, color: "green" }}>Generate CV</Text>
+              <View style={{ marginLeft: 10 }}>
+                <Ionicons name="newspaper-outline" size={32} color="green" />
+              </View>
+            </View>
           </TouchableOpacity>
-        </View>
 
-        {/* ini card work experience */}
-        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
-          <Text className="mb-5 font-bold text-lg">Work experience:</Text>
-          {workData.map((work) => (
-            <View key={work.id} className="mb-4">
-              <Text className="font-bold">Position:</Text>
-              <Text className="mb-2">{work.position}</Text>
-
-              <Text className="font-bold">Company:</Text>
-              <Text className="mb-2">{work.company}</Text>
-
-              <Text className="font-bold">Type:</Text>
-              <Text className="mb-2">{work.type}</Text>
-
-              <Text className="font-bold">Work period:</Text>
-              <Text>
-                {work.startWork} - {work.stopWork}
-              </Text>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <TouchableOpacity
-                  className="mt-2 items-end"
-                  activeOpacity={0.8}
-                  onPress={() => navigation.navigate("WorkForm")}
-                >
-                  <Ionicons name="add-circle-outline" size={20} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className="mt-2 items-end ml-3"
-                  activeOpacity={0.8}
-                  onPress={() => navigation.navigate("EditWork")}
-                >
-                  <Feather name="edit" size={20} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className="mt-2 items-end ml-3"
-                  activeOpacity={0.8}
-                  onPress={() => console.log("button delete")}
-                >
-                  <Ionicons name="trash-outline" size={20} color="black" />
-                </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={Logout}
+            className="rounded-3xl p-5 w-10/12 items-end"
+          >
+            <View
+              // className="mt-3"
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text style={{ fontSize: 20, color: "black" }}>Logout</Text>
+              <View style={{ marginLeft: 10 }}>
+                <AntDesign name="logout" size={32} color="black" />
               </View>
             </View>
-          ))}
-        </View>
+          </TouchableOpacity>
 
-        {/* ini card educational background */}
-        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
-          <Text className="mb-5 font-bold text-lg">
-            Educational background:
-          </Text>
-          {eduData.map((eduBackground) => (
-            <View key={eduBackground.id} className="mb-4">
-              <Text className="font-bold">University:</Text>
-              <Text className="mb-2">{eduBackground.College}</Text>
-
-              <Text className="font-bold">Degree:</Text>
-              <Text className="mb-2">{eduBackground.educationalLevel}</Text>
-
-              <Text className="font-bold">Field of Study:</Text>
-              <Text className="mb-2">{eduBackground.Major}</Text>
-              <Text className="font-bold">Study Period:</Text>
-              <Text>
-                {eduBackground.startEducation} -{" "}
-                {eduBackground.graduateEducation}
-              </Text>
-
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "flex-end",
-                }}
-              >
-                <TouchableOpacity
-                  className="mt-2 items-end"
-                  activeOpacity={0.8}
-                  onPress={() => navigation.navigate("EducationForm")}
-                >
-                  <Ionicons name="add-circle-outline" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className="mt-2 items-end ml-3"
-                  activeOpacity={0.8}
-                  onPress={() => navigation.navigate("EditEducation")}
-                >
-                  <Feather name="edit" size={20} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  className="mt-2 items-end ml-3"
-                  activeOpacity={0.8}
-                  onPress={() => console.log("button delete")}
-                >
-                  <Ionicons name="trash-outline" size={20} color="black" />
-                </TouchableOpacity>
+          <TouchableOpacity
+            activeOpacity={0.8}
+            onPress={() => console.log("destroy user")}
+            className="rounded-3xl p-5 w-10/12 mb-24 items-end"
+          >
+            <View
+              // className="mt-3"
+              style={{ flexDirection: "row", alignItems: "center" }}
+            >
+              <Text style={{ fontSize: 20, color: "red" }}>Delete Account</Text>
+              <View style={{ marginLeft: 10 }}>
+                <MaterialIcons name="delete" size={32} color="red" />
               </View>
             </View>
-          ))}
-        </View>
-
-        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
-          <Text className="font-bold">CV Link:</Text>
-        </View>
-
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => console.log("handle cv")}
-          className="rounded-3xl p-5 w-10/12 mt-10 items-end"
-        >
-          <View
-            // className="mt-3"
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <Text style={{ fontSize: 20, color: "green" }}>Generate CV</Text>
-            <View style={{ marginLeft: 10 }}>
-              <Ionicons name="newspaper-outline" size={32} color="green" />
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => navigation.navigate("LandingScreen")}
-          className="rounded-3xl p-5 w-10/12 items-end"
-        >
-          <View
-            // className="mt-3"
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <Text style={{ fontSize: 20, color: "black" }}>Logout</Text>
-            <View style={{ marginLeft: 10 }}>
-              <AntDesign name="logout" size={32} color="black" />
-            </View>
-          </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          activeOpacity={0.8}
-          onPress={() => console.log("destroy user")}
-          className="rounded-3xl p-5 w-10/12 mb-24 items-end"
-        >
-          <View
-            // className="mt-3"
-            style={{ flexDirection: "row", alignItems: "center" }}
-          >
-            <Text style={{ fontSize: 20, color: "red" }}>Delete Account</Text>
-            <View style={{ marginLeft: 10 }}>
-              <MaterialIcons name="delete" size={32} color="red" />
-            </View>
-          </View>
-        </TouchableOpacity>
-      </ScrollView>
-    </View>
-  );
+          </TouchableOpacity>
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
 const styles = StyleSheet.create({

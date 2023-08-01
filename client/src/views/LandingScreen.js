@@ -75,7 +75,12 @@ export default function LandingScreen({ navigation }) {
           >
             <Image
               source={require("../../assets/seeker_white.png")}
-              style={{ height: 170, width: 170, marginTop: 160 }}
+              style={{
+                height: 170,
+                width: 170,
+                marginTop: 100,
+                marginBottom: 40,
+              }}
             />
             <Text
               style={{
