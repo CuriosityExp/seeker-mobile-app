@@ -1,5 +1,6 @@
 import { Image, Text, View, TouchableOpacity, FlatList } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { useState, useEffect } from "react";
 
 export default function AiRecScreen({ navigation }) {
   const data = [
@@ -19,7 +20,7 @@ export default function AiRecScreen({ navigation }) {
 
   const renderItem = ({ item }) => (
     <TouchableOpacity
-      onPress={() => navigation.navigate("AiJob")}
+      onPress={() => navigation.navigate("AiJob", { keyword: item.Role })}
       className="bg-amber-300 rounded-3xl p-4 mb-7 shadow-md items-center"
     >
       <Text className="text-lg font-semibold mb-2">{item.Role}</Text>

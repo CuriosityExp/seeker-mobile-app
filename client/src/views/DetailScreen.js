@@ -1,14 +1,38 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { WebView } from "react-native-webview";
-
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseUrl from "../components/baseUrl";
 // ...
-export default function DetailScreen({ route }) {
+export default function DetailScreen({ navigation, route }) {
   const { url, data } = route.params;
-  console.log(data);
+  console.log(data, "ini data");
 
-  function handlePostBookmarks() {
-    console.log("handle post bookmarks");
+  // function handlePostBookmarks() {
+  //   console.log("handle post bookmarks");
+  // }
+
+  async function handlePostBookmarks() {
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${baseUrl}/bookmarks`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          url: data.url,
+          logo: data.logo,
+          jobTitle: data.jobTitle,
+          companyName: data.companyName,
+          companyLocation: data.companyLocation,
+          salary: data.salary,
+        },
+      });
+      console.log(res, "<<<");
+      navigation.navigate("Bookmark");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

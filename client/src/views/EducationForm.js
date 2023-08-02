@@ -12,8 +12,10 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import DatePicker from "react-native-datepicker";
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import baseUrl from "../components/baseUrl";
 
 export default function EducationForm({ navigation }) {
   const [College, setCollege] = useState("");
@@ -22,14 +24,28 @@ export default function EducationForm({ navigation }) {
   const [startEducation, setStartEducation] = useState("");
   const [graduateEducation, setGraduateEducation] = useState("");
 
-  const handleSubmit = () => {
-    console.log("College:", College);
-    console.log("educationalLevel:", educationalLevel);
-    console.log("Major:", Major);
-    console.log("start:", startEducation);
-    console.log("graduate:", graduateEducation);
-    navigation.navigate("Root", { screen: "Profile" });
-  };
+  async function handleSubmit() {
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${baseUrl}/educations`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          educationalLevel: educationalLevel,
+          College: College,
+          Major: Major,
+          startEducation: startEducation,
+          graduatedEducation: graduateEducation,
+        },
+      });
+      if (res.status == 201) {
+        console.log("tesss");
+        navigation.navigate("Profile");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView

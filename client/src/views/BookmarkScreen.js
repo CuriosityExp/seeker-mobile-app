@@ -1,7 +1,61 @@
-import { Image, Text, View, FlatList, TouchableOpacity } from "react-native";
-import { Feather, FontAwesome5 } from "@expo/vector-icons";
+import {
+  Image,
+  Text,
+  View,
+  FlatList,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
+import { Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import baseUrl from "../components/baseUrl";
 
 export default function BookmarkScreen({ navigation }) {
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState("");
+  const [bookmarks, setBookmarks] = useState("");
+  // console.log(bookmarks, "<<<<<<<<<<<<<<<<<<<<<<");
+
+  async function getData() {
+    try {
+      const { data } = await axios.get(`${baseUrl}/users`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      setProfile(data);
+      setLoading(false);
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function getBookmarks() {
+    try {
+      const { data } = await axios.get(`${baseUrl}/bookmarks`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      setBookmarks(data);
+      setLoading(false);
+      // console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      getData();
+      getBookmarks();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
+
   const bookmarkData = [
     {
       url: "https://glints.com/id/opportunities/jobs/frontend-developer-angular-vuejs/cf0e754c-77e2-4dd9-a03f-902224e0a281?utm_referrer=explore",
@@ -77,9 +131,11 @@ export default function BookmarkScreen({ navigation }) {
 
   const renderItem = ({ item, index }) => (
     <View className="bg-amber-300 rounded-3xl p-4 mb-4 shadow-md">
-      <Text className="text-lg font-semibold mb-2">{item.jobTitle}</Text>
-      <Text className="text-black">{item.companyName}</Text>
-      <Text className="text-sm text-black mt-2">{item.salary}</Text>
+      <Text className="text-lg font-semibold mb-2">{item.customTitle}</Text>
+      <Text className="text-black">Company: {item.Job[0].companyName}</Text>
+      <Text className="text-sm text-black mt-2">
+        Location: {item.Job[0].companyLocation}
+      </Text>
       <View
         className="mt-2"
         style={{
@@ -92,7 +148,8 @@ export default function BookmarkScreen({ navigation }) {
           activeOpacity={0.8}
           onPress={() =>
             navigation.navigate("Todo", {
-              data: bookmarkData[index],
+              job: item.Job[0],
+              bookmarkId: item._id,
             })
           }
         >
@@ -103,8 +160,8 @@ export default function BookmarkScreen({ navigation }) {
           activeOpacity={0.8}
           onPress={() =>
             navigation.navigate("DetailBookmarks", {
-              url: item.url,
-              data: bookmarkData[index],
+              url: item.Job[0].url,
+              data: item.Job[0],
             })
           }
         >
@@ -116,14 +173,20 @@ export default function BookmarkScreen({ navigation }) {
 
   return (
     <View className="flex-1 p-4 bg-white">
-      <View className="flex-row items-center mb-4">
-        <Text className="text-red-500 text-xl mr-2">🔖</Text>
-        <Text className="text-xl font-semibold">My Job Bookmarks</Text>
+      <View
+        className="mt-2"
+        style={{ flexDirection: "row", justifyContent: "space-between" }}
+      >
+        <Text style={styles.header}>My Bookmark</Text>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.balance}>Balance: {profile.token}</Text>
+          <FontAwesome name="star" size={24} color="green" />
+        </View>
       </View>
-      <View>
+      <View className="mt-4">
         <FlatList
           className="mb-32"
-          data={bookmarkData}
+          data={bookmarks}
           renderItem={renderItem}
           keyExtractor={(item, index) => index}
         />
@@ -131,3 +194,17 @@ export default function BookmarkScreen({ navigation }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  balance: {
+    fontSize: 18,
+    color: "green",
+    marginBottom: 20,
+    marginRight: 8,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+});

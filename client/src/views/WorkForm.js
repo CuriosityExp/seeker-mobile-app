@@ -12,24 +12,41 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import DatePicker from "react-native-datepicker";
 import React, { useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import baseUrl from "../components/baseUrl";
 
 export default function WorkForm({ navigation }) {
-  const [job, setJob] = useState("");
+  const [position, setPosition] = useState("");
   const [company, setCompany] = useState("");
   const [type, setType] = useState("");
   const [startWork, setStartWork] = useState("");
   const [stopWork, setStopWork] = useState("");
 
-  const handleSubmit = () => {
-    console.log("job:", job);
-    console.log("company:", company);
-    console.log("type:", type);
-    console.log("start work:", startWork);
-    console.log("stop work:", stopWork);
-    navigation.navigate("Root", { screen: "Profile" });
-  };
+  async function handleSubmit() {
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${baseUrl}/work-experience`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          company: company,
+          position: position,
+          type: type,
+          startWork: startWork,
+          stopWork: stopWork,
+        },
+      });
+      // console.log(res, "<<<");
+      if (res.status == 201) {
+        console.log("tesss");
+        navigation.navigate("Profile");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -49,8 +66,8 @@ export default function WorkForm({ navigation }) {
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Job Name (ex: Fullstack Developer)"
-                value={job}
-                onChangeText={setJob}
+                value={position}
+                onChangeText={setPosition}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
@@ -69,12 +86,14 @@ export default function WorkForm({ navigation }) {
                 placeholder="Start date (ex: 2018)"
                 value={startWork}
                 onChangeText={setStartWork}
+                keyboardType="numeric"
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="End date (ex: 2020)"
                 value={stopWork}
                 onChangeText={setStopWork}
+                keyboardType="numeric"
               />
               <TouchableOpacity
                 activeOpacity={0.8}

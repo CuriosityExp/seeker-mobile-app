@@ -10,8 +10,8 @@ import {
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import axios from "axios";
-
-const baseUrl = "https://4edb-2a09-bac1-3480-18-00-279-49.ngrok-free.app/";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseUrl from "../components/baseUrl";
 
 export default function SearchScreen({ navigation, route }) {
   const { keyword } = route.params;
@@ -98,7 +98,8 @@ export default function SearchScreen({ navigation, route }) {
     try {
       const { data } = await axios({
         method: "post",
-        url: baseUrl + endpoint,
+        url: `${baseUrl}/${endpoint}`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
         data: {
           query: keyword,
         },

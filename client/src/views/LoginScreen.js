@@ -11,21 +11,14 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-const baseUrl = "https://4edb-2a09-bac1-3480-18-00-279-49.ngrok-free.app";
+import baseUrl from "../components/baseUrl";
 
 export default function LoginScreen({ navigation }) {
-  let [username, setUsername] = useState("");
-  let [password, setPassword] = useState("");
-
-  // const handleSubmit = () => {
-  //   console.log("Username:", username);
-  //   console.log("Password:", password);
-  //   navigation.navigate("Root", { screen: "Home" });
-  // };
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
   async function Login() {
     try {

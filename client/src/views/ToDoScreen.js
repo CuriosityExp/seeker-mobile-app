@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   Text,
@@ -9,47 +9,29 @@ import {
   StyleSheet,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseUrl from "../components/baseUrl";
 
 export default function ToDoScreen({ navigation, route }) {
-  const { data } = route.params;
-  console.log(data);
+  const { job, bookmarkId } = route.params;
+  // console.log(bookmarkId);
 
   const [postedTodos, setPostedTodos] = useState(false);
   const [todoItem, setTodoItem] = useState("");
-  const [todos, setTodos] = useState([
-    { id: 1, text: "Complete homework", completed: false },
-    { id: 2, text: "Go for a walk", completed: false },
-    { id: 3, text: "Buy groceries", completed: false },
-    { id: 4, text: "Call a friend", completed: false },
-    { id: 5, text: "Read a book", completed: false },
-    { id: 6, text: "Complete homework", completed: false },
-    { id: 7, text: "Go for a walk", completed: false },
-    { id: 8, text: "Buy groceries", completed: false },
-    { id: 9, text: "Call a friend", completed: false },
-    { id: 10, text: "Read a book", completed: false },
-    { id: 11, text: "Complete homework", completed: false },
-    { id: 12, text: "Go for a walk", completed: false },
-    { id: 13, text: "Buy groceries", completed: false },
-    { id: 14, text: "Call a friend", completed: false },
-    { id: 15, text: "Read a book", completed: false },
-  ]);
+  const [todos, setTodos] = useState("");
+  console.log("masuk todos >>>>>>>>>", todos);
 
-  const handleAddTodo = () => {
-    if (todoItem.trim() === "") return;
-    setTodos([...todos, { id: Date.now(), text: todoItem, completed: false }]);
-    setTodoItem("");
-  };
-
-  const handleToggleTodo = (id) => {
-    setTodos((prevTodos) =>
-      prevTodos.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, completed: !todo.completed };
-        }
-        return todo;
-      })
-    );
-  };
+  // const handleToggleTodo = (_id) => {
+  //   setTodos((prevTodos) =>
+  //     prevTodos.map((todo) => {
+  //       if (todo.id === _id) {
+  //         return { ...todo, completed: !todo.completed };
+  //       }
+  //       return todo;
+  //     })
+  //   );
+  // };
 
   const handleRemoveTodo = (id) => {
     setTodos(todos.filter((todo) => todo.id !== id));
@@ -59,16 +41,38 @@ export default function ToDoScreen({ navigation, route }) {
     setPostedTodos(!postedTodos);
   };
 
-  const renderItem = ({ item }) => (
-    <TouchableOpacity onPress={() => handleToggleTodo(item.id)}>
+  async function getTodos() {
+    try {
+      const { data } = await axios.get(`${baseUrl}/todos/${bookmarkId}`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      setTodos(data);
+      // console.log(">>>>>>>", data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      getTodos();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  const renderItem = ({ item, index }) => (
+    <TouchableOpacity onPress={() => handleToggleTodo(index)}>
       <View style={[styles.todoItem, item.completed && styles.completedTodo]}>
         {item.completed ? (
           <FontAwesome name="check-square-o" size={24} color="green" />
         ) : (
           <FontAwesome name="square-o" size={24} color="black" />
         )}
-        <Text style={styles.todoText}>{item.text}</Text>
-        <TouchableOpacity onPress={() => handleRemoveTodo(item.id)}>
+        <Text style={styles.todoText}>{item.task}</Text>
+        <TouchableOpacity
+          className="mr-3"
+          onPress={() => handleRemoveTodo(item._id)}
+        >
           <FontAwesome name="trash-o" size={24} color="red" />
         </TouchableOpacity>
       </View>
@@ -79,15 +83,11 @@ export default function ToDoScreen({ navigation, route }) {
     <View style={styles.container}>
       <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
         <Text style={styles.header}>TODO List</Text>
-        <View style={{ flexDirection: "row" }}>
-          <Text style={styles.balance}>Balance: 5</Text>
-          <FontAwesome name="star" size={24} color="green" />
-        </View>
       </View>
-      <View style={styles.card}>
-        <Text style={styles.jobTitle}>{data.jobTitle}</Text>
-        <Text style={styles.companyName}>{data.companyName}</Text>
-        <Text style={styles.jobDescription}>{data.companyLocation}</Text>
+      <View className="mt-2" style={styles.card}>
+        <Text style={styles.jobTitle}>{job.jobTitle}</Text>
+        <Text style={styles.companyName}>{job.companyName}</Text>
+        <Text style={styles.jobDescription}>{job.companyLocation}</Text>
       </View>
       {/* <View style={styles.inputContainer}>
         <TextInput
@@ -197,6 +197,7 @@ const styles = StyleSheet.create({
   todoText: {
     flex: 1,
     marginLeft: 10,
+    padding: 8,
   },
   jobTitle: {
     fontSize: 20,

@@ -24,6 +24,7 @@ import SectionScreen from "./src/views/SectionScreen";
 import TopupScreen from "./src/views/TopupScreen";
 import EditEducation from "./src/views/EditEducation";
 import EditWork from "./src/views/EditWork";
+import EditProfile from "./src/views/EditProfile";
 import PostScreen from "./src/views/PostScreen";
 import SearchJob from "./src/views/SearchJob";
 
@@ -102,6 +103,7 @@ export default function App() {
             <Stack.Screen name="EditWork" component={EditWork} />
             <Stack.Screen name="EditEducation" component={EditEducation} />
             <Stack.Screen name="SearchJob" component={SearchJob} />
+            <Stack.Screen name="EditProfile" component={EditProfile} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>

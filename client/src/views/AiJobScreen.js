@@ -8,12 +8,17 @@ import {
   Dimensions,
 } from "react-native";
 import { Foundation } from "@expo/vector-icons";
+import baseUrl from "../components/baseUrl";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SCREEN_WIDTH = Dimensions.get("window").width;
 const SWIPE_THRESHOLD = 0.25 * SCREEN_WIDTH;
 const SWIPE_OUT_DURATION = 250;
 
-export default function AiJobScreen({ navigation }) {
+export default function AiJobScreen({ navigation, route }) {
+  const { keyword } = route.params;
+
   const data = [
     {
       url: "https://glints.com/id/opportunities/jobs/frontend-developer-angular-vuejs/cf0e754c-77e2-4dd9-a03f-902224e0a281?utm_referrer=explore",

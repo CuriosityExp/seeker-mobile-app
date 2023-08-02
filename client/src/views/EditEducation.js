@@ -12,24 +12,60 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import DatePicker from "react-native-datepicker";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseUrl from "../components/baseUrl";
 
-export default function EditEducation({ navigation }) {
+export default function EditEducation({ navigation, route }) {
+  const { id } = route.params;
+  // console.log(id);
+  const [current, setCurrent] = useState("");
+  // console.log(current);
   const [College, setCollege] = useState("");
   const [educationalLevel, setEducationalLevel] = useState("");
   const [Major, setMajor] = useState("");
   const [startEducation, setStartEducation] = useState("");
   const [graduateEducation, setGraduateEducation] = useState("");
 
-  const handleSubmit = () => {
-    console.log("College:", College);
-    console.log("educationalLevel:", educationalLevel);
-    console.log("Major:", Major);
-    console.log("start:", startEducation);
-    console.log("graduate:", graduateEducation);
-    navigation.navigate("Root", { screen: "Profile" });
-  };
+  async function getData() {
+    try {
+      const { data } = await axios.get(`${baseUrl}/educations/${id}`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      console.log(data);
+      setCurrent(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      getData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  async function handleSubmit() {
+    try {
+      const res = await axios({
+        method: "put",
+        url: `${baseUrl}/educations/${id}`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          educationalLevel: educationalLevel || current.educationalLevel,
+          College: College || current.College,
+          Major: Major || current.Major,
+          startEducation: startEducation || current.startEducation,
+          graduatedEducation: graduateEducation || current.graduatedEducation,
+        },
+      });
+      navigation.navigate("Profile");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -49,32 +85,32 @@ export default function EditEducation({ navigation }) {
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="College (ex: Universitas Brawijaya)"
-                value={College}
+                defaultValue={current.College}
                 onChangeText={setCollege}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Degrees (ex: Bachelor's Degree)"
-                value={educationalLevel}
+                defaultValue={current.educationalLevel}
                 onChangeText={setEducationalLevel}
                 // keyboardType="numeric"
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Major (ex: International Relation)"
-                value={Major}
+                defaultValue={current.Major}
                 onChangeText={setMajor}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Start (ex: 2018)"
-                value={startEducation}
+                defaultValue={current.startEducation}
                 onChangeText={setStartEducation}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Graduate (ex: 2022) "
-                value={graduateEducation}
+                defaultValue={current.graduatedEducation}
                 onChangeText={setGraduateEducation}
               />
               <TouchableOpacity

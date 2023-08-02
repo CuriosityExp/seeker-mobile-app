@@ -5,7 +5,7 @@ import { WebView } from "react-native-webview";
 // ...
 export default function DetailBookmarks({ route }) {
   const { url, data } = route.params;
-  // console.log(data); // udah dapet datanya
+  console.log(data, "ini data"); // udah dapet datanya
 
   function handleGenerateTodos() {
     console.log("handle generate todos");

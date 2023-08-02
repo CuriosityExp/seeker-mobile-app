@@ -13,8 +13,7 @@ import {
 } from "react-native";
 import React, { useState } from "react";
 import axios from "axios";
-
-const baseUrl = "https://4edb-2a09-bac1-3480-18-00-279-49.ngrok-free.app";
+import baseUrl from "../components/baseUrl";
 
 export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -51,24 +50,24 @@ export default function RegisterScreen({ navigation }) {
               style={{
                 height: 150,
                 width: 150,
-                marginTop: 50,
                 marginBottom: 80,
+                marginTop: 50,
               }}
             />
           </View>
           <View className="">
             <TextInput
               className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
-              placeholder="Username"
-              value={username}
-              onChangeText={setUsername}
-            />
-            <TextInput
-              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
               placeholder="Email"
               value={email}
               onChangeText={setEmail}
               keyboardType="email-address"
+            />
+            <TextInput
+              className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
+              placeholder="Username"
+              value={username}
+              onChangeText={setUsername}
             />
             <TextInput
               secureTextEntry={true}
@@ -99,7 +98,6 @@ const styles = StyleSheet.create({
   },
   inner: {
     padding: 24,
-    // flex: 1,
     justifyContent: "space-around",
   },
 });

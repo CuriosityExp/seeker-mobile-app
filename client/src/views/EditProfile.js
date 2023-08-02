@@ -12,30 +12,66 @@ import {
   Image,
   ScrollView,
 } from "react-native";
-import DatePicker from "react-native-datepicker";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseUrl from "../components/baseUrl";
 
-export default function EditProfile({ navigation }) {
+export default function EditProfile({ navigation, route }) {
+  const { id } = route.params;
+  // console.log(id);
+  const [current, setCurrent] = useState("");
+  // console.log(current, "ini data");
   const [fullName, setFullName] = useState("");
   const [sayName, setSayName] = useState("");
-  const [bithDate, setBirthDate] = useState("");
+  const [birthDate, setBirthDate] = useState("");
   const [gender, setGender] = useState("");
   const [aboutMe, setAboutMe] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [domisili, setDomisili] = useState("");
-  const [profilePictureUrl, setProfilePictureUrl] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
 
-  const handleSubmit = () => {
-    console.log(fullName);
-    console.log(sayName);
-    console.log(bithDate);
-    console.log(gender);
-    console.log(aboutMe);
-    console.log(phoneNumber);
-    console.log(domisili);
-    console.log(profilePictureUrl);
-    navigation.navigate("Root", { screen: "Profile" });
-  };
+  async function getData() {
+    try {
+      const { data } = await axios.get(`${baseUrl}/people/${id}`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      // console.log(data, "ini data");
+      setCurrent(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      getData();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  async function handleSubmit() {
+    try {
+      const res = await axios({
+        method: "put",
+        url: `${baseUrl}/people/${id}`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          fullName: fullName || current.fullName,
+          aboutMe: aboutMe || current.aboutMe,
+          sayName: sayName || current.sayName,
+          birthDate: birthDate || current.birthDate,
+          gender: gender || current.gender,
+          phoneNumber: phoneNumber || current.phoneNumber,
+          domisili: domisili || current.domisili,
+          photoUrl: photoUrl || current.photoUrl,
+        },
+      });
+      navigation.navigate("Profile");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <KeyboardAvoidingView
@@ -56,52 +92,52 @@ export default function EditProfile({ navigation }) {
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Fullname (ex: John Doe)"
-                value={fullName}
+                defaultValue={current.fullName}
                 onChangeText={setFullName}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Nickname (ex: Doe)"
-                value={sayName}
+                defaultValue={current.sayName}
                 onChangeText={setSayName}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Birthdate (ex: Solo, 31 February 1995)"
-                value={bithDate}
+                defaultValue={current.birthDate}
                 onChangeText={setBirthDate}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Gender (ex: Male)"
-                value={gender}
+                defaultValue={current.gender}
                 onChangeText={setGender}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="About Me (ex: My name is Doe, ...)"
-                value={aboutMe}
+                defaultValue={current.aboutMe}
                 onChangeText={setAboutMe}
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Phone Number (ex: 08121212394)"
-                value={phoneNumber}
+                defaultValue={current.phoneNumber}
                 onChangeText={setPhoneNumber}
                 keyboardType="numeric"
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Domicile (ex: Sorong)"
-                value={domisili}
+                defaultValue={current.domisili}
                 onChangeText={setDomisili}
-                keyboardType="numeric"
+                // keyboardType="numeric"
               />
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Profile Picture Url (ex: https://profile-picture.jpg)"
-                value={profilePictureUrl}
-                onChangeText={setProfilePictureUrl}
+                defaultValue={current.photoUrl}
+                onChangeText={setPhotoUrl}
               />
               <TouchableOpacity
                 activeOpacity={0.8}
