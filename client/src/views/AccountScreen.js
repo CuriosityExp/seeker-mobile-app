@@ -60,6 +60,18 @@ export default function AccountScreen({ navigation }) {
     }
   }
 
+  async function deleteAccount(id) {
+    try {
+      await axios.delete(`${baseUrl}/users/${id}`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      console.log("done delete account");
+      navigation.navigate("LandingScreen");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function getData() {
     try {
       const { data } = await axios.get(`${baseUrl}/users`, {
@@ -342,7 +354,7 @@ export default function AccountScreen({ navigation }) {
 
         <TouchableOpacity
           activeOpacity={0.8}
-          onPress={() => console.log("destroy user")}
+          onPress={() => deleteAccount(id)}
           className="rounded-3xl p-5 w-10/12 mb-24 items-end"
         >
           <View
