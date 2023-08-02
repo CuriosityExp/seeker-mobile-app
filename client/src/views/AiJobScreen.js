@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   Image,
   Text,
@@ -18,82 +18,135 @@ const SWIPE_OUT_DURATION = 250;
 
 export default function AiJobScreen({ navigation, route }) {
   const { keyword } = route.params;
+  console.log(keyword);
 
-  const data = [
-    {
-      url: "https://glints.com/id/opportunities/jobs/frontend-developer-angular-vuejs/cf0e754c-77e2-4dd9-a03f-902224e0a281?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/b43910cc1253621c07b5f915c6364736.png",
-      jobTitle: "Frontend Developer (Angular/Vuejs)",
-      companyName: "PT Code Development Indonesia",
-      companyLocation: "Setiabudi, Jakarta Selatan, DKI Jakarta, Indonesia",
-      salary: "IDR5.000.000 - 5.000.100",
-      workExperience: "3 – 5 tahun",
-      minimumEducation: "Minimal Sarjana (S1)",
-    },
-    {
-      url: "https://glints.com/id/opportunities/jobs/internship-frontend-developer/51ad90a8-e9fe-4455-8aa2-395b7a6467f8?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/28fd4af8203b3cd0cfe0d071ecbe5a1b.jfif",
-      jobTitle: "Internship - Frontend Developer",
-      companyName: "Sekawan Media",
-      companyLocation: "Kedungkandang, Malang, Jawa Timur, Indonesia",
-      salary: "Perusahaan tidak menampilkan gaji",
-      workExperience: "Kurang dari setahun",
-      minimumEducation: "Minimal Diploma (D1 - D4)",
-    },
-    {
-      url: "https://glints.com/id/opportunities/jobs/frontend-react-native-developer/e9dd5ac8-64c0-4106-84f9-0a5044199036?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/b43910cc1253621c07b5f915c6364736.png",
-      jobTitle: "Frontend React Native Developer",
-      companyName: "PT Code Development Indonesia",
-      companyLocation: "Setiabudi, Jakarta Selatan, DKI Jakarta, Indonesia",
-      salary: "IDR8.000.000 - 15.000.000",
-      workExperience: "1 – 3 tahun",
-      minimumEducation: "Minimal Sarjana (S1)",
-    },
-    {
-      url: "https://glints.com/id/opportunities/jobs/junior-frontend-developer/3a619d1f-bd54-4617-8f54-b7f255e7df1d?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/e3a0e22d17e1b20ef93686da49ae5910.png",
-      jobTitle: "Junior Frontend Developer",
-      companyName: "CV Edukasi Indonesia Jaya",
-      companyLocation: "Ciputat, Tangerang Selatan, Banten, Indonesia",
-      salary: "IDR1.000.000",
-      workExperience: "1 – 3 tahun",
-      minimumEducation: "Minimal Sarjana (S1)",
-    },
-    {
-      url: "https://glints.com/id/opportunities/jobs/lead-frontend-engineer/90d7ae17-9571-4b25-9fdb-01f0e9ff4589?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/02d65651499a0d785f71deb771a3466d.jpg",
-      jobTitle: "Lead Frontend Engineer",
-      companyName: "PT Teknologi Pamadya Analitika",
-      companyLocation: "Tangerang, Banten, Indonesia",
-      salary: "Perusahaan tidak menampilkan gaji",
-      workExperience: "1 – 3 tahun",
-      minimumEducation: " Diperbarui 23 hari yang lalu",
-    },
-    {
-      url: "https://glints.com/id/opportunities/jobs/javascript-frontend-developer-mid-level/8c41aecb-da46-47ec-a6f6-6380c18f4875?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/18839296049e2b546b93cf8e4f5a9bf6.jpg",
-      jobTitle: "Javascript Frontend Developer Mid Level",
-      companyName: "Geekgarden",
-      companyLocation: "Kapanewon Depok, Kab. Sleman, DI Yogyakarta, Indonesia",
-      salary: "Perusahaan tidak menampilkan gaji",
-      workExperience: "3 – 5 tahun",
-      minimumEducation: "Minimal Diploma (D1 - D4)",
-    },
-    {
-      url: "https://glints.com/id/opportunities/jobs/source/spwd/frontend/b080cc9b-1172-4c1c-9c28-53069f1b0e4d?utm_referrer=explore",
-      logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/powered-by-glints-logo.png",
-      jobTitle: "Frontend",
-      companyName: "Confidential Company",
-      companyLocation: "Powered by Glints",
-      salary: "Jakarta Pusat, DKI Jakarta, Indonesia",
-      workExperience: "SGD3.000 - 5.000",
-      minimumEducation: "1 – 3 tahun",
-    },
-  ];
+  // const jobs = [
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/frontend-developer-angular-vuejs/cf0e754c-77e2-4dd9-a03f-902224e0a281?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/b43910cc1253621c07b5f915c6364736.png",
+  //     jobTitle: "Frontend Developer (Angular/Vuejs)",
+  //     companyName: "PT Code Development Indonesia",
+  //     companyLocation: "Setiabudi, Jakarta Selatan, DKI Jakarta, Indonesia",
+  //     salary: "IDR5.000.000 - 5.000.100",
+  //     workExperience: "3 – 5 tahun",
+  //     minimumEducation: "Minimal Sarjana (S1)",
+  //   },
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/internship-frontend-developer/51ad90a8-e9fe-4455-8aa2-395b7a6467f8?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/28fd4af8203b3cd0cfe0d071ecbe5a1b.jfif",
+  //     jobTitle: "Internship - Frontend Developer",
+  //     companyName: "Sekawan Media",
+  //     companyLocation: "Kedungkandang, Malang, Jawa Timur, Indonesia",
+  //     salary: "Perusahaan tidak menampilkan gaji",
+  //     workExperience: "Kurang dari setahun",
+  //     minimumEducation: "Minimal Diploma (D1 - D4)",
+  //   },
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/frontend-react-native-developer/e9dd5ac8-64c0-4106-84f9-0a5044199036?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/b43910cc1253621c07b5f915c6364736.png",
+  //     jobTitle: "Frontend React Native Developer",
+  //     companyName: "PT Code Development Indonesia",
+  //     companyLocation: "Setiabudi, Jakarta Selatan, DKI Jakarta, Indonesia",
+  //     salary: "IDR8.000.000 - 15.000.000",
+  //     workExperience: "1 – 3 tahun",
+  //     minimumEducation: "Minimal Sarjana (S1)",
+  //   },
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/junior-frontend-developer/3a619d1f-bd54-4617-8f54-b7f255e7df1d?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/e3a0e22d17e1b20ef93686da49ae5910.png",
+  //     jobTitle: "Junior Frontend Developer",
+  //     companyName: "CV Edukasi Indonesia Jaya",
+  //     companyLocation: "Ciputat, Tangerang Selatan, Banten, Indonesia",
+  //     salary: "IDR1.000.000",
+  //     workExperience: "1 – 3 tahun",
+  //     minimumEducation: "Minimal Sarjana (S1)",
+  //   },
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/lead-frontend-engineer/90d7ae17-9571-4b25-9fdb-01f0e9ff4589?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/02d65651499a0d785f71deb771a3466d.jpg",
+  //     jobTitle: "Lead Frontend Engineer",
+  //     companyName: "PT Teknologi Pamadya Analitika",
+  //     companyLocation: "Tangerang, Banten, Indonesia",
+  //     salary: "Perusahaan tidak menampilkan gaji",
+  //     workExperience: "1 – 3 tahun",
+  //     minimumEducation: " Diperbarui 23 hari yang lalu",
+  //   },
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/javascript-frontend-developer-mid-level/8c41aecb-da46-47ec-a6f6-6380c18f4875?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/18839296049e2b546b93cf8e4f5a9bf6.jpg",
+  //     jobTitle: "Javascript Frontend Developer Mid Level",
+  //     companyName: "Geekgarden",
+  //     companyLocation: "Kapanewon Depok, Kab. Sleman, DI Yogyakarta, Indonesia",
+  //     salary: "Perusahaan tidak menampilkan gaji",
+  //     workExperience: "3 – 5 tahun",
+  //     minimumEducation: "Minimal Diploma (D1 - D4)",
+  //   },
+  //   {
+  //     url: "https://glints.com/id/opportunities/jobs/source/spwd/frontend/b080cc9b-1172-4c1c-9c28-53069f1b0e4d?utm_referrer=explore",
+  //     logo: "https://images.glints.com/unsafe/glints-dashboard.s3.amazonaws.com/company-logo/powered-by-glints-logo.png",
+  //     jobTitle: "Frontend",
+  //     companyName: "Confidential Company",
+  //     companyLocation: "Powered by Glints",
+  //     salary: "Jakarta Pusat, DKI Jakarta, Indonesia",
+  //     workExperience: "SGD3.000 - 5.000",
+  //     minimumEducation: "1 – 3 tahun",
+  //   },
+  // ];
 
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const position = useRef(new Animated.ValueXY()).current;
+
+  async function fetchJobs() {
+    try {
+      const access_token = await AsyncStorage.getItem("access_token");
+
+      const responses = await Promise.all([
+        axios.post(
+          `${baseUrl}/fetchjobsglints`,
+          {
+            query: keyword,
+          },
+          {
+            headers: { access_token },
+          }
+        ),
+        axios.post(
+          `${baseUrl}/fetchjobskalibrr`,
+          {
+            query: keyword,
+          },
+          {
+            headers: { access_token },
+          }
+        ),
+        axios.post(
+          `${baseUrl}/fetchjobskarir`,
+          {
+            query: keyword,
+          },
+          {
+            headers: { access_token },
+          }
+        ),
+      ]);
+
+      const jobsData = responses.map((response) => response.data);
+      const combinedJobs = jobsData.reduce((accumulator, currentData) => {
+        return [...accumulator, ...currentData];
+      }, []);
+
+      setJobs(combinedJobs);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchJobs();
+  }, []);
 
   const onSwipeRight = (jobTitle) => {
     // alert(`You swiped right on ${jobTitle}`);
@@ -108,19 +161,39 @@ export default function AiJobScreen({ navigation, route }) {
     }).start(() => onSwipeComplete(direction));
   };
 
-  const forceSwipe2 = (direction) => {
+  const forceSwipe2 = async (direction) => {
     const x = direction === "right" ? SCREEN_WIDTH : -SCREEN_WIDTH;
     Animated.timing(position, {
       toValue: { x, y: 0 },
       duration: SWIPE_OUT_DURATION,
       useNativeDriver: false,
     }).start(() => onSwipeComplete(direction));
+    const data = jobs[currentIndex];
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${baseUrl}/bookmarks`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          url: data.url,
+          logo: data.logo,
+          jobTitle: data.jobTitle,
+          companyName: data.companyName,
+          companyLocation: data.companyLocation,
+          salary: data.salary,
+        },
+      });
+      console.log("Bookmark ditambahkan:", res.data);
+    } catch (error) {
+      console.error("Gagal menambahkan bookmark:", error);
+    }
+
     console.log("add ke bookmark");
-    console.log(data[currentIndex]); // ini data percard
+    console.log(jobs[currentIndex]); // ini jobs percard
   };
 
   const onSwipeComplete = (direction) => {
-    const job = data[currentIndex];
+    const job = jobs[currentIndex];
     direction === "right" ? onSwipeRight(job.jobTitle) : null;
     setCurrentIndex((prevIndex) => prevIndex + 1);
     position.setValue({ x: 0, y: 0 });
@@ -139,7 +212,7 @@ export default function AiJobScreen({ navigation, route }) {
   };
 
   const renderCard = (index) => {
-    const job = data[index];
+    const job = jobs[index];
 
     if (index < currentIndex) return null;
     if (index === currentIndex) {
@@ -280,7 +353,7 @@ export default function AiJobScreen({ navigation, route }) {
   };
 
   const renderJobCards = () => {
-    if (currentIndex >= data.length) {
+    if (currentIndex >= jobs.length) {
       return (
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
@@ -292,8 +365,12 @@ export default function AiJobScreen({ navigation, route }) {
       );
     }
 
-    return data.map((_, index) => renderCard(index));
+    return jobs.map((_, index) => renderCard(index));
   };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: "gray", padding: 16 }}>
