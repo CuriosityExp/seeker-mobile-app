@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
+import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import baseUrl from "../components/baseUrl";
 
 export default function TopupScreen({ navigation }) {
   const [selectedToken, setSelectedToken] = useState(null);
@@ -20,18 +23,75 @@ export default function TopupScreen({ navigation }) {
     setCustomToken(text);
   }
 
-  function handlePurchase() {
+  async function addToken() {
     let inputToken;
     if (selectedToken) {
       inputToken = selectedToken;
     } else if (customToken) {
       inputToken = customToken;
     }
+    if (inputToken) {
+      try {
+        const res = await axios({
+          method: "patch",
+          url: `${baseUrl}/users`,
+          headers: { access_token: await AsyncStorage.getItem("access_token") },
+          data: {
+            token: inputToken,
+          },
+        });
+        navigation.navigate("Profile");
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  }
 
+  async function handlePurchase() {
+    let inputToken;
+    if (selectedToken) {
+      inputToken = selectedToken;
+    } else if (customToken) {
+      inputToken = customToken;
+    }
     if (inputToken) {
       console.log(`Purchasing ${inputToken} token`);
+
+      try {
+        const res = await axios({
+          method: "post",
+          url: `${baseUrl}/users/payment-midtrans`,
+          headers: { access_token: await AsyncStorage.getItem("access_token") },
+          data: {
+            token: inputToken,
+          },
+        });
+
+        console.log(res.data.redirect_url, "<<<");
+        let url = res.data.redirect_url;
+
+        try {
+          const tokenRes = await axios({
+            method: "patch",
+            url: `${baseUrl}/users`,
+            headers: {
+              access_token: await AsyncStorage.getItem("access_token"),
+            },
+            data: {
+              token: inputToken,
+            },
+          });
+
+          navigation.navigate("Profile");
+          navigation.navigate("Payment", { url: url });
+        } catch (tokenError) {
+          console.log(tokenError);
+        }
+      } catch (error) {
+        console.log(error);
+      }
     }
-    navigation.navigate("Root", { screen: "Account" });
+    // navigation.navigate("Root", { screen: "Account" });
   }
 
   return (

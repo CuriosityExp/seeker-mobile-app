@@ -20,22 +20,38 @@ export default function ToDoScreen({ navigation, route }) {
   const [postedTodos, setPostedTodos] = useState(false);
   const [todoItem, setTodoItem] = useState("");
   const [todos, setTodos] = useState("");
-  console.log("masuk todos >>>>>>>>>", todos);
+  // console.log("masuk todos >>>>>>>>>", todos);
 
-  // const handleToggleTodo = (_id) => {
-  //   setTodos((prevTodos) =>
-  //     prevTodos.map((todo) => {
-  //       if (todo.id === _id) {
-  //         return { ...todo, completed: !todo.completed };
-  //       }
-  //       return todo;
-  //     })
-  //   );
+  // const handleToggleTodo = () => {
+  //   console.log("handle");
   // };
 
-  const handleRemoveTodo = (id) => {
-    setTodos(todos.filter((todo) => todo.id !== id));
-  };
+  async function handleToggleTodo(id) {
+    try {
+      const res = await axios({
+        method: "patch",
+        url: `${baseUrl}/todos/${id}`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: { status: true },
+      });
+      getTodos();
+      console.log("done change");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleRemoveTodo(id) {
+    try {
+      await axios.delete(`${baseUrl}/todos/${id}`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      console.log("done delete work");
+      getTodos();
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const handlePostTodos = () => {
     setPostedTodos(!postedTodos);
@@ -61,9 +77,9 @@ export default function ToDoScreen({ navigation, route }) {
   }, [navigation]);
 
   const renderItem = ({ item, index }) => (
-    <TouchableOpacity onPress={() => handleToggleTodo(index)}>
-      <View style={[styles.todoItem, item.completed && styles.completedTodo]}>
-        {item.completed ? (
+    <TouchableOpacity onPress={() => handleToggleTodo(item._id)}>
+      <View style={[styles.todoItem, item.status && styles.completedTodo]}>
+        {item.status ? (
           <FontAwesome name="check-square-o" size={24} color="green" />
         ) : (
           <FontAwesome name="square-o" size={24} color="black" />
@@ -104,7 +120,7 @@ export default function ToDoScreen({ navigation, route }) {
         <FlatList
           data={todos}
           renderItem={renderItem}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item, index) => index}
           style={styles.list}
         />
       </View>

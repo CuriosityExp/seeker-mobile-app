@@ -170,6 +170,7 @@ export default function AiJobScreen({ navigation, route }) {
     }).start(() => onSwipeComplete(direction));
     const data = jobs[currentIndex];
     try {
+      alert(`You swiped right on`);
       const res = await axios({
         method: "post",
         url: `${baseUrl}/bookmarks`,

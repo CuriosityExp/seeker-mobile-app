@@ -1,14 +1,26 @@
 import React, { Component } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { WebView } from "react-native-webview";
+import axios from "axios";
+import baseUrl from "../components/baseUrl";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-// ...
-export default function DetailBookmarks({ route }) {
-  const { url, data } = route.params;
-  console.log(data, "ini data"); // udah dapet datanya
+export default function DetailBookmarks({ navigation, route }) {
+  const { url, data, bookmarkId } = route.params;
+  console.log(bookmarkId, "ini data"); // udah dapet datanya
 
-  function handleGenerateTodos() {
-    console.log("handle generate todos");
+  async function handleGenerateTodos() {
+    try {
+      const res = await axios({
+        method: "post",
+        url: `${baseUrl}/todos/${bookmarkId}`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      console.log(res, "<<<");
+      navigation.navigate("Todo");
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (

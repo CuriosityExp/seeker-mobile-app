@@ -27,6 +27,7 @@ import EditWork from "./src/views/EditWork";
 import EditProfile from "./src/views/EditProfile";
 import PostScreen from "./src/views/PostScreen";
 import SearchJob from "./src/views/SearchJob";
+import PaymentScreen from "./src/views/PaymentScreen";
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -104,6 +105,7 @@ export default function App() {
             <Stack.Screen name="EditEducation" component={EditEducation} />
             <Stack.Screen name="SearchJob" component={SearchJob} />
             <Stack.Screen name="EditProfile" component={EditProfile} />
+            <Stack.Screen name="Payment" component={PaymentScreen} />
             <Stack.Screen name="Root" component={Root} />
           </Stack.Navigator>
         </NavigationContainer>
