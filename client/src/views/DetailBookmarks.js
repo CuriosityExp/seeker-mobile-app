@@ -16,8 +16,8 @@ export default function DetailBookmarks({ navigation, route }) {
         url: `${baseUrl}/todos/${bookmarkId}`,
         headers: { access_token: await AsyncStorage.getItem("access_token") },
       });
-      console.log(res, "<<<");
-      navigation.navigate("Todo");
+      console.log("todo added");
+      // navigation.navigate("Todo");
     } catch (error) {
       console.log(error);
     }

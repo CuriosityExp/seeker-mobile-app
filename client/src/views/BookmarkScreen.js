@@ -16,7 +16,7 @@ export default function BookmarkScreen({ navigation }) {
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState("");
   const [bookmarks, setBookmarks] = useState("");
-  // console.log(bookmarks, "<<<<<<<<<<<<<<<<<<<<<<");
+  console.log(bookmarks[0], "<<<<<<<<<<<<<<<<<<<<<< ini dari bookmarks");
 
   async function getData() {
     try {
@@ -57,7 +57,17 @@ export default function BookmarkScreen({ navigation }) {
   }
 
   const renderItem = ({ item, index }) => (
-    <View className="bg-amber-300 rounded-3xl p-4 mb-4 shadow-md">
+    // <View className="bg-amber-300 rounded-3xl p-4 mb-4 shadow-md">
+    <View style={styles.card}>
+      <Image
+        style={{
+          width: 50,
+          height: 50,
+          borderRadius: 40,
+          marginBottom: 15,
+        }}
+        source={{ uri: item.Job[0].logo }}
+      />
       <Text className="text-lg font-semibold mb-2">{item.customTitle}</Text>
       <Text className="text-black">Company: {item.Job[0].companyName}</Text>
       <Text className="text-sm text-black mt-2">
@@ -134,5 +144,12 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+  },
+  card: {
+    backgroundColor: "#ffde59",
+    borderRadius: 25,
+    padding: 16,
+    marginBottom: 12,
+    elevation: 4,
   },
 });

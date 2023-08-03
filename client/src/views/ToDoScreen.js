@@ -15,7 +15,7 @@ import baseUrl from "../components/baseUrl";
 
 export default function ToDoScreen({ navigation, route }) {
   const { job, bookmarkId } = route.params;
-  // console.log(bookmarkId);
+  console.log(job, "ini job");
 
   const [postedTodos, setPostedTodos] = useState(false);
   const [todoItem, setTodoItem] = useState("");
