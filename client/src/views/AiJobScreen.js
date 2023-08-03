@@ -98,7 +98,7 @@ export default function AiJobScreen({ navigation, route }) {
     }).start(() => onSwipeComplete(direction));
     const data = jobs[currentIndex];
     try {
-      alert(`You swiped right on`);
+      alert(`Add to bookmark sucessfull`);
       const res = await axios({
         method: "post",
         url: `${baseUrl}/bookmarks`,
@@ -115,6 +115,7 @@ export default function AiJobScreen({ navigation, route }) {
       console.log("Bookmark ditambahkan:", res.data);
     } catch (error) {
       console.error("Gagal menambahkan bookmark:", error);
+      alert(`Add to bookmark failed`);
     }
 
     console.log("add ke bookmark");

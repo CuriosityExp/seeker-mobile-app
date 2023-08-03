@@ -54,7 +54,18 @@ export default function BookmarkScreen({ navigation }) {
   }, [navigation]);
 
   if (!bookmarks.length) {
-    return <Text>No Data</Text>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" color="#007BFF" />
+      </View>
+    );
   }
 
   if (loading) {

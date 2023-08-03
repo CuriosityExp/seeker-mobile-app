@@ -60,17 +60,30 @@ export default function PostScreen({ navigation }) {
     );
   };
 
-  const CardPost = ({ id, profilePicture, username, postContent, isLiked }) => {
+  const CardPost = ({
+    id,
+    profilePicture,
+    username,
+    postContent,
+    desc,
+    isLiked,
+  }) => {
     return (
-      <View className="ml-3" style={styles.card}>
+      <View style={styles.card}>
         <View style={styles.profileContainer}>
           <Image
             source={{ uri: profilePicture }}
-            style={{ height: 100, width: 100, borderRadius: 300 }}
+            style={{ height: 80, width: 80, borderRadius: 300 }}
           />
           <Text style={styles.username}>{username}</Text>
         </View>
+        <Text style={styles.postContent}>{desc}</Text>
         <Text style={styles.postContent}>{postContent}</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity style={styles.showButton}>
+            <Text style={styles.buttonText}>Show Todos</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.iconContainer}>
           <TouchableOpacity style={styles.icon} onPress={() => handleLike(id)}>
             <Icon
@@ -110,9 +123,10 @@ export default function PostScreen({ navigation }) {
         renderItem={({ item }) => (
           <CardPost
             id={item.id}
-            profilePicture={item.profilePicture}
+            profilePicture={item.profileImg}
             username={item.username}
-            postContent={item.postContent}
+            postContent={item.title}
+            desc={item.description}
             isLiked={item.isLiked}
           />
         )}
@@ -133,25 +147,35 @@ const styles = StyleSheet.create({
     padding: 16,
     marginBottom: 16,
     width: 350,
+    marginLeft: 10,
   },
   profileContainer: {
     flexDirection: "row",
     alignItems: "center",
   },
-  profilePicture: {
-    width: 50,
-    height: 50,
-    borderRadius: 25,
-    marginRight: 10,
-  },
   username: {
     fontWeight: "bold",
     fontSize: 16,
+    marginLeft: 10,
   },
   postContent: {
     marginTop: 8,
-    fontSize: 14,
-    color: "#555",
+    fontSize: 17,
+    color: "black",
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 10,
+    left: 10,
+  },
+  showButton: {
+    backgroundColor: "#ffde59",
+    padding: 5,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "black",
+    fontWeight: "bold",
   },
   iconContainer: {
     flexDirection: "row",
@@ -160,5 +184,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     marginLeft: 10,
+  },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
 });
