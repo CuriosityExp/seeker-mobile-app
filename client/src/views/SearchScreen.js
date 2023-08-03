@@ -10,7 +10,13 @@ import {
   Dimensions,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import { Foundation, FontAwesome, Entypo, Feather } from "@expo/vector-icons";
+import {
+  Foundation,
+  FontAwesome,
+  Entypo,
+  Feather,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 
@@ -94,7 +100,7 @@ export default function SearchScreen({ navigation }) {
                 height: 100,
                 width: 100,
                 marginTop: 60,
-                marginBottom: 40,
+                marginBottom: 20,
               }}
             />
           </View>
@@ -112,19 +118,36 @@ export default function SearchScreen({ navigation }) {
             onPress={() => navigation.navigate("AiRec")}
             className=" bg-amber-300 rounded-3xl p-5 w-10/12"
             style={{
-              marginBottom: 10,
+              marginBottom: 2,
             }}
           >
             <View
               className="mt-3"
-              style={{ flexDirection: "row", alignItems: "center" }}
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
             >
-              <Text
-                style={{ fontSize: 14, color: "black" }}
-                className="font-bold"
+              <MaterialCommunityIcons name="robot-love" size={30} color="red" />
+              <View
+                style={{
+                  flexDirection: "column",
+                }}
               >
-                SEEKER's Job Recommendations
-              </Text>
+                <Text
+                  style={{ fontSize: 25, color: "black" }}
+                  className="font-bold"
+                >
+                  SEEKER's
+                </Text>
+                <Text
+                  style={{ fontSize: 15, color: "black" }}
+                  className="font-bold"
+                >
+                  Job Recommendations
+                </Text>
+              </View>
               <View style={{ marginLeft: 10 }}>
                 <Image
                   source={require("../../assets/seeker_black.png")}
@@ -141,15 +164,36 @@ export default function SearchScreen({ navigation }) {
             }}
           >
             <View
-              className="mt-3"
-              style={{ flexDirection: "row", alignItems: "center" }}
+              className=""
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "flex-start",
+              }}
             >
-              <Text
-                style={{ fontSize: 14, color: "black" }}
-                className="font-bold"
+              <MaterialCommunityIcons
+                name="cloud-search"
+                size={30}
+                color="blue"
+              />
+              <View
+                style={{
+                  flexDirection: "column",
+                }}
               >
-                All Available Jobs List
-              </Text>
+                <Text
+                  style={{ fontSize: 25, color: "black" }}
+                  className="font-bold"
+                >
+                  All Available
+                </Text>
+                <Text
+                  style={{ fontSize: 25, color: "black" }}
+                  className="font-bold"
+                >
+                  Jobs List
+                </Text>
+              </View>
               <View style={{ marginLeft: 10 }}>
                 <Image
                   source={require("../../assets/animated.png")}
