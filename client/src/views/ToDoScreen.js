@@ -28,21 +28,33 @@ export default function ToDoScreen({ navigation, route }) {
   //   console.log("handle");
   // };
 
-  // async function handlePost() {
-  //   try {
-  //     await axios.post(`${baseUrl}/posts`, {
-  //       headers: { access_token: await AsyncStorage.getItem("access_token") },
-  //       data: {
-  //         title:,
-  //         description:,
-  //         bookmarkId: bookmarkId
-  //       }
-  //     });
-  //     console.log("posted");
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
+  async function handlePost() {
+    
+    try {
+      const todosss = await axios({
+        method: "post",
+        url: `${baseUrl}/posts`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+        data: {
+          title: `To do List For ${job.jobTitle}`,
+          description: "It works for me, check this out",
+          bookmarkId: bookmarkId
+        }
+      });
+      // await axios.post(`${baseUrl}/posts`, {
+      //   headers: { access_token: await AsyncStorage.getItem("access_token") },
+      //   data: {
+      //     title: `To do List For ${job.jobTitle}`,
+      //     description: "It works for me, check this out",
+      //     bookmarkId: bookmarkId
+      //   }
+      // });
+      setPostedTodos(true)
+      console.log("posted");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async function handleToggleTodo(id) {
     try {
@@ -159,7 +171,9 @@ export default function ToDoScreen({ navigation, route }) {
       </View>
       <TouchableOpacity
         style={styles.postButton}
-        onPress={handlePostTodos}
+        onPress={() => {
+          handlePost()
+        }}
         disabled={postedTodos}
       >
         <Text style={styles.postButtonText}>
