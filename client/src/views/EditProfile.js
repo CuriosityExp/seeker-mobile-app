@@ -87,38 +87,47 @@ export default function EditProfile({ navigation, route }) {
                 source={require("../../assets/seeker_black.png")}
                 style={{ height: 120, width: 120 }}
               />
+              <Text style={styles.title}>Profile</Text>
             </View>
             <View className="">
+              <Text style={styles.label}>Fullname</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Fullname (ex: John Doe)"
                 defaultValue={current.fullName}
                 onChangeText={setFullName}
               />
+              <Text style={styles.label}>Nickname</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Nickname (ex: Doe)"
                 defaultValue={current.sayName}
                 onChangeText={setSayName}
               />
+              <Text style={styles.label}>Birth Date</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Birthdate (ex: Solo, 31 February 1995)"
                 defaultValue={current.birthDate}
                 onChangeText={setBirthDate}
               />
+              <Text style={styles.label}>Gender</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Gender (ex: Male)"
                 defaultValue={current.gender}
                 onChangeText={setGender}
               />
+              <Text style={styles.label}>About me</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="About Me (ex: My name is Doe, ...)"
                 defaultValue={current.aboutMe}
                 onChangeText={setAboutMe}
               />
+              <Text style={styles.label}>Phone Number</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Phone Number (ex: 08121212394)"
@@ -126,6 +135,8 @@ export default function EditProfile({ navigation, route }) {
                 onChangeText={setPhoneNumber}
                 keyboardType="numeric"
               />
+              <Text style={styles.label}>Domicile</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Domicile (ex: Sorong)"
@@ -133,6 +144,8 @@ export default function EditProfile({ navigation, route }) {
                 onChangeText={setDomisili}
                 // keyboardType="numeric"
               />
+              <Text style={styles.label}>Profile Picture URL</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Profile Picture Url (ex: https://profile-picture.jpg)"
@@ -164,4 +177,13 @@ const styles = StyleSheet.create({
     padding: 24,
     justifyContent: "space-around",
   },
+  label:{
+    fontWeight: "bold",
+    marginBottom: 5
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 25,
+    marginBottom: 10
+  }
 });
