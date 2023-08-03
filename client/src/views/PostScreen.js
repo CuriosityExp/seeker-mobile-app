@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,122 +8,48 @@ import {
   FlatList,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import baseUrl from "../components/baseUrl";
 
-export default function PostScreen() {
+export default function PostScreen({ navigation }) {
   const [isLiked, setIsLiked] = useState("");
-  const [data, setData] = useState([
-    {
-      id: "1",
-      profilePicture:
-        "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-      username: "User1",
-      isLiked: false,
-      postContent:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
-    },
-    {
-      id: "2",
-      profilePicture:
-        "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-      username: "User2",
-      isLiked: true,
-      postContent:
-        "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
-    },
-    {
-      id: "3",
-      profilePicture:
-        "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-      username: "User1",
-      isLiked: false,
-      postContent:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
-    },
-    {
-      id: "4",
-      profilePicture:
-        "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-      username: "User2",
-      isLiked: true,
-      postContent:
-        "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
-    },
-    {
-      id: "5",
-      profilePicture:
-        "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-      username: "User1",
-      isLiked: false,
-      postContent:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
-    },
-    {
-      id: "6",
-      profilePicture:
-        "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-      username: "User2",
-      isLiked: false,
-      postContent:
-        "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
-    },
-  ]);
+  const [loading, setLoading] = useState(true);
+  // const [profile, setProfile] = useState("");
+  const [data, setData] = useState("");
+  console.log(data, "ini data post");
 
-  //   const data = [
-  //     {
-  //       id: "1",
-  //       profilePicture:
-  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-  //       username: "User1",
-  //       isLiked: false,
-  //       postContent:
-  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
-  //     },
-  //     {
-  //       id: "2",
-  //       profilePicture:
-  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-  //       username: "User2",
-  //       isLiked: true,
-  //       postContent:
-  //         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
-  //     },
-  //     {
-  //       id: "3",
-  //       profilePicture:
-  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-  //       username: "User1",
-  //       isLiked: false,
-  //       postContent:
-  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
-  //     },
-  //     {
-  //       id: "4",
-  //       profilePicture:
-  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-  //       username: "User2",
-  //       isLiked: true,
-  //       postContent:
-  //         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
-  //     },
-  //     {
-  //       id: "5",
-  //       profilePicture:
-  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-  //       username: "User1",
-  //       isLiked: false,
-  //       postContent:
-  //         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque eu urna augue. Sed dictum nisi eu ultrices pellentesque.",
-  //     },
-  //     {
-  //       id: "6",
-  //       profilePicture:
-  //         "https://e7.pngegg.com/pngimages/527/663/png-clipart-logo-person-user-person-icon-rectangle-photography-thumbnail.png",
-  //       username: "User2",
-  //       isLiked: false,
-  //       postContent:
-  //         "Sed eget elit a libero pretium dictum. In tincidunt quam nunc, et tincidunt risus feugiat quis. Vestibulum facilisis eros eget mauris tincidunt, et venenatis augue sagittis.",
-  //     },
-  //   ]
+  // async function getData() {
+  //   try {
+  //     const { data } = await axios.get(`${baseUrl}/users`, {
+  //       headers: { access_token: await AsyncStorage.getItem("access_token") },
+  //     });
+  //     setProfile(data);
+  //     setLoading(false);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  async function getPosts() {
+    try {
+      const { data } = await axios.get(`${baseUrl}/posts`, {
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      setData(data);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", async () => {
+      // getData();
+      getPosts();
+    });
+    return unsubscribe;
+  }, [navigation]);
 
   const handleLike = (postId) => {
     setData((prevData) =>
@@ -159,6 +85,10 @@ export default function PostScreen() {
       </View>
     );
   };
+
+  if (loading) {
+    return <Text>Loading...</Text>;
+  }
 
   return (
     <View style={styles.container}>

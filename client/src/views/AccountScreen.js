@@ -72,15 +72,26 @@ export default function AccountScreen({ navigation }) {
     }
   }
 
+  async function generateCV() {
+    try {
+      const res = await axios({
+        method: "patch",
+        url: `${baseUrl}/cv-generate`,
+        headers: { access_token: await AsyncStorage.getItem("access_token") },
+      });
+      getData();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function getData() {
     try {
       const { data } = await axios.get(`${baseUrl}/users`, {
         headers: { access_token: await AsyncStorage.getItem("access_token") },
       });
-      // console.log("tesss <<<");
       setProfile(data);
       setLoading(false);
-      // console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -320,7 +331,7 @@ export default function AccountScreen({ navigation }) {
           <View className="items-end">
             <TouchableOpacity
               activeOpacity={0.8}
-              onPress={() => console.log("handle cv")}
+              onPress={() => generateCV()}
               className="rounded-3xl w-10/12 mt-10 mb-2 items-end"
             >
               <View

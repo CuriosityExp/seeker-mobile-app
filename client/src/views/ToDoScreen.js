@@ -32,7 +32,7 @@ export default function ToDoScreen({ navigation, route }) {
         method: "patch",
         url: `${baseUrl}/todos/${id}`,
         headers: { access_token: await AsyncStorage.getItem("access_token") },
-        data: { status: true },
+        // data: { status: true },
       });
       getTodos();
       console.log("done change");
