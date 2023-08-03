@@ -80,14 +80,18 @@ export default function EditEducation({ navigation, route }) {
                 source={require("../../assets/seeker_black.png")}
                 style={{ height: 150, width: 150, marginTop: 40 }}
               />
+              <Text style={styles.title}>Edit Education Background</Text>
             </View>
             <View className="mt-10">
+              <Text style={styles.label}>College Name</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="College (ex: Universitas Brawijaya)"
                 defaultValue={current.College}
                 onChangeText={setCollege}
               />
+              <Text style={styles.label}>Education Level</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Degrees (ex: Bachelor's Degree)"
@@ -95,18 +99,24 @@ export default function EditEducation({ navigation, route }) {
                 onChangeText={setEducationalLevel}
                 // keyboardType="numeric"
               />
+              <Text style={styles.label}>Major</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Major (ex: International Relation)"
                 defaultValue={current.Major}
                 onChangeText={setMajor}
               />
+              <Text style={styles.label}>Start Education</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Start (ex: 2018)"
                 defaultValue={current.startEducation}
                 onChangeText={setStartEducation}
               />
+              <Text style={styles.label}>End Education</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Graduate (ex: 2022) "
@@ -137,5 +147,14 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     justifyContent: "space-around",
+  },
+  label: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 25,
+    marginBottom: 10,
   },
 });

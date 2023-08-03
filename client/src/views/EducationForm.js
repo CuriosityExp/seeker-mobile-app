@@ -60,14 +60,20 @@ export default function EducationForm({ navigation }) {
                 source={require("../../assets/seeker_black.png")}
                 style={{ height: 150, width: 150, marginTop: 40 }}
               />
+              <Text style={styles.title}>Add Education Background</Text>
             </View>
+
             <View className="mt-10">
+              <Text style={styles.label}>College Name</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="College (ex: Universitas Brawijaya)"
                 value={College}
                 onChangeText={setCollege}
               />
+              <Text style={styles.label}>Educational Level</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Degrees (ex: Bachelor's Degree)"
@@ -75,18 +81,24 @@ export default function EducationForm({ navigation }) {
                 onChangeText={setEducationalLevel}
                 // keyboardType="numeric"
               />
+              <Text style={styles.label}>Major</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Major (ex: International Relation)"
                 value={Major}
                 onChangeText={setMajor}
               />
+              <Text style={styles.label}>Start Education</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Start (ex: 2018)"
                 value={startEducation}
                 onChangeText={setStartEducation}
               />
+              <Text style={styles.label}>End Education</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Graduate (ex: 2022) "
@@ -117,5 +129,14 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     justifyContent: "space-around",
+  },
+  label: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 25,
+    marginBottom: 10,
   },
 });

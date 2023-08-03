@@ -80,32 +80,43 @@ export default function EditWork({ navigation, route }) {
                 source={require("../../assets/seeker_black.png")}
                 style={{ height: 150, width: 150, marginTop: 40 }}
               />
+              <Text style={styles.title}>Edit Work Experience</Text>
             </View>
             <View className="mt-10">
+              <Text style={styles.label}>Job Name</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Job Name (ex: Fullstack Developer)"
                 defaultValue={current.position}
                 onChangeText={(newText) => setJob(newText)}
               />
+              <Text style={styles.label}>Company Name</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Company Name (ex: PT. ABC XYZ)"
                 defaultValue={current.company}
                 onChangeText={(newText) => setCompany(newText)}
               />
+              <Text style={styles.label}>Employment Type</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Employment type (ex: Full-time)"
                 defaultValue={current.type}
                 onChangeText={(newText) => setType(newText)}
               />
+              <Text style={styles.label}>Start Work Year</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Start date (ex: 2018)"
                 defaultValue={current.startWork}
                 onChangeText={(newText) => setStartWork(newText)}
               />
+              <Text style={styles.label}>End Work Year</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="End date (ex: 2020)"
@@ -136,5 +147,14 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     justifyContent: "space-around",
+  },
+  label: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 25,
+    marginBottom: 10,
   },
 });
