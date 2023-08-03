@@ -145,7 +145,13 @@ export default function AccountScreen({ navigation }) {
             source={{
               uri: profile?.Profile?.photoUrl,
             }}
-            style={{ height: 200, width: 200, borderRadius: 300 }}
+            style={{
+              height: 200,
+              width: 200,
+              borderRadius: 300,
+              borderColor: "green",
+              borderWidth: 2,
+            }}
           />
           <View className="mt-5">
             <Text className="text-center text-3xl font-medium">
@@ -173,6 +179,7 @@ export default function AccountScreen({ navigation }) {
           className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12"
           style={styles.elevation}
         >
+            <Text style={styles.profile}>Profile</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Foundation name="mail" size={24} color="black" />
             <View style={{ marginLeft: 10 }}>
@@ -233,7 +240,7 @@ export default function AccountScreen({ navigation }) {
           className="bg-amber-300 rounded-3xl p-5 w-10/12"
           style={styles.elevation}
         >
-          <Text className="mb-5 font-bold text-lg">Work experience:</Text>
+          <Text style={styles.profile}>Work experience:</Text>
           {profile.Profile.WorkExperiences.map((work) => (
             <View key={work.id} className="mb-4">
               <Text className="font-bold">Position:</Text>
@@ -286,7 +293,7 @@ export default function AccountScreen({ navigation }) {
           className="rounded-3xl p-5 w-10/12 mt-9 items-end"
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 17, color: "black" , fontWeight:"bold"}}>
+            <Text style={{ fontSize: 17, color: "black", fontWeight: "bold" }}>
               Add Education Background
             </Text>
             <View style={{ marginLeft: 10 }}>
@@ -298,7 +305,7 @@ export default function AccountScreen({ navigation }) {
           className="bg-amber-300 rounded-3xl p-5 w-10/12"
           style={styles.elevation}
         >
-          <Text className="mb-5 font-bold text-lg">Education background:</Text>
+          <Text style={styles.profile}>Education background</Text>
           {profile.Profile.Education.map((el) => (
             <View key={el.id} className="mb-4">
               <Text className="font-bold">University:</Text>
@@ -426,4 +433,11 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowColor: "#000000",
   },
+  profile:{
+    fontWeight: "bold",
+    fontSize: 20,
+    marginBottom: 15,
+    textAlign: "right",
+    marginRight: 5,
+  }
 });
