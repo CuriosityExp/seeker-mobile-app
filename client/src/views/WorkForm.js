@@ -86,7 +86,7 @@ export default function WorkForm({ navigation }) {
                 value={type}
                 onChangeText={setType}
               />
-              <Text style={styles.label}>Start date</Text>
+              <Text style={styles.label}>Start Work Year</Text>
 
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
@@ -95,7 +95,7 @@ export default function WorkForm({ navigation }) {
                 onChangeText={setStartWork}
                 keyboardType="numeric"
               />
-              <Text style={styles.label}>End date</Text>
+              <Text style={styles.label}>End Work Year</Text>
 
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
