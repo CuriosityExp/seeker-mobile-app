@@ -12,6 +12,7 @@ import {
 import {
   Foundation,
   FontAwesome,
+  FontAwesome5,
   Entypo,
   Feather,
   Ionicons,
@@ -76,11 +77,13 @@ export default function AccountScreen({ navigation }) {
 
   async function generateCV() {
     try {
-      const res = await axios({
+      console.log("Masuk sini <<<")
+      const {data} = await axios({
         method: "patch",
         url: `${baseUrl}/cv-generate`,
         headers: { access_token: await AsyncStorage.getItem("access_token") },
       });
+      console.log(data)
       getData();
     } catch (error) {
       console.log(error);
@@ -142,7 +145,13 @@ export default function AccountScreen({ navigation }) {
             source={{
               uri: profile?.Profile?.photoUrl,
             }}
-            style={{ height: 100, width: 100, borderRadius: 300 }}
+            style={{
+              height: 200,
+              width: 200,
+              borderRadius: 300,
+              borderColor: "green",
+              borderWidth: 2,
+            }}
           />
           <View className="mt-5">
             <Text className="text-center text-3xl font-medium">
@@ -166,7 +175,11 @@ export default function AccountScreen({ navigation }) {
           </View>
         </View>
         {/* ini card profile */}
-        <View className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12">
+        <View
+          className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12"
+          style={styles.elevation}
+        >
+            <Text style={styles.profile}>Profile</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Foundation name="mail" size={24} color="black" />
             <View style={{ marginLeft: 10 }}>
@@ -215,7 +228,7 @@ export default function AccountScreen({ navigation }) {
           className="rounded-3xl p-5 w-10/12 mt-9 items-end"
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 17, color: "black" }}>
+            <Text style={{ fontSize: 17, color: "black", fontWeight: "bold" }}>
               Add Work Exprerience
             </Text>
             <View style={{ marginLeft: 10 }}>
@@ -223,8 +236,11 @@ export default function AccountScreen({ navigation }) {
             </View>
           </View>
         </TouchableOpacity>
-        <View className="bg-amber-300 rounded-3xl p-5 w-10/12">
-          <Text className="mb-5 font-bold text-lg">Work experience:</Text>
+        <View
+          className="bg-amber-300 rounded-3xl p-5 w-10/12"
+          style={styles.elevation}
+        >
+          <Text style={styles.profile}>Work experience:</Text>
           {profile.Profile.WorkExperiences.map((work) => (
             <View key={work.id} className="mb-4">
               <Text className="font-bold">Position:</Text>
@@ -277,7 +293,7 @@ export default function AccountScreen({ navigation }) {
           className="rounded-3xl p-5 w-10/12 mt-9 items-end"
         >
           <View style={{ flexDirection: "row", alignItems: "center" }}>
-            <Text style={{ fontSize: 17, color: "black" }}>
+            <Text style={{ fontSize: 17, color: "black", fontWeight: "bold" }}>
               Add Education Background
             </Text>
             <View style={{ marginLeft: 10 }}>
@@ -285,8 +301,11 @@ export default function AccountScreen({ navigation }) {
             </View>
           </View>
         </TouchableOpacity>
-        <View className="bg-amber-300 rounded-3xl p-5 w-10/12">
-          <Text className="mb-5 font-bold text-lg">Education background:</Text>
+        <View
+          className="bg-amber-300 rounded-3xl p-5 w-10/12"
+          style={styles.elevation}
+        >
+          <Text style={styles.profile}>Education background</Text>
           {profile.Profile.Education.map((el) => (
             <View key={el.id} className="mb-4">
               <Text className="font-bold">University:</Text>
@@ -338,10 +357,15 @@ export default function AccountScreen({ navigation }) {
           ))}
         </View>
 
-        <View className="mt-10 bg-amber-300 rounded-3xl p-3 w-10/12">
+        <View
+          className="mt-10 bg-amber-300 rounded-3xl p-3 w-10/12"
+          style={styles.elevation}
+        >
           <Text className="font-bold ml-2 mt-1 text-lg">CV Link:</Text>
           <TouchableOpacity onPress={() => Linking.openURL(profile.Profile.CV)}>
-            <Text className="ml-2 mt-2">Click Here</Text>
+            <Text className="ml-2 mt-2">
+              <FontAwesome5 name="file-pdf" size={24} /> Download CV
+            </Text>
           </TouchableOpacity>
           <View className="items-end">
             <TouchableOpacity
@@ -405,4 +429,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     marginRight: 8,
   },
+  elevation: {
+    elevation: 10,
+    shadowColor: "#000000",
+  },
+  profile:{
+    fontWeight: "bold",
+    fontSize: 20,
+    marginBottom: 15,
+    textAlign: "right",
+    marginRight: 5,
+  }
 });
