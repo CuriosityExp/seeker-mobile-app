@@ -1,4 +1,11 @@
-import { Image, Text, View, TouchableOpacity, FlatList } from "react-native";
+import {
+  Image,
+  Text,
+  View,
+  ActivityIndicator,
+  TouchableOpacity,
+  FlatList,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
@@ -54,6 +61,21 @@ export default function AiRecScreen({ navigation }) {
       <Text className="text-lg font-semibold mb-2">{item.jobRoles}</Text>
     </TouchableOpacity>
   );
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" color="#007BFF" />
+      </View>
+    );
+  }
 
   return (
     <View className="flex-1 p-4 bg-white">

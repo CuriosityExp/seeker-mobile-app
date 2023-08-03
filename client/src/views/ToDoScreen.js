@@ -7,6 +7,7 @@ import {
   TextInput,
   FlatList,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import axios from "axios";
@@ -17,6 +18,7 @@ export default function ToDoScreen({ navigation, route }) {
   const { job, bookmarkId } = route.params;
   console.log(job, "ini job");
 
+  const [loading, setLoading] = useState(true);
   const [postedTodos, setPostedTodos] = useState(false);
   const [todoItem, setTodoItem] = useState("");
   const [todos, setTodos] = useState("");
@@ -25,6 +27,22 @@ export default function ToDoScreen({ navigation, route }) {
   // const handleToggleTodo = () => {
   //   console.log("handle");
   // };
+
+  // async function handlePost() {
+  //   try {
+  //     await axios.post(`${baseUrl}/posts`, {
+  //       headers: { access_token: await AsyncStorage.getItem("access_token") },
+  //       data: {
+  //         title:,
+  //         description:,
+  //         bookmarkId: bookmarkId
+  //       }
+  //     });
+  //     console.log("posted");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
 
   async function handleToggleTodo(id) {
     try {
@@ -63,7 +81,7 @@ export default function ToDoScreen({ navigation, route }) {
         headers: { access_token: await AsyncStorage.getItem("access_token") },
       });
       setTodos(data);
-      // console.log(">>>>>>>", data);
+      setLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -75,6 +93,21 @@ export default function ToDoScreen({ navigation, route }) {
     });
     return unsubscribe;
   }, [navigation]);
+
+  if (loading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" color="#007BFF" />
+      </View>
+    );
+  }
 
   const renderItem = ({ item, index }) => (
     <TouchableOpacity onPress={() => handleToggleTodo(item._id)}>

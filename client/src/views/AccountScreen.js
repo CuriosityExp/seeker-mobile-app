@@ -6,6 +6,8 @@ import {
   ScrollView,
   StyleSheet,
   RefreshControl,
+  ActivityIndicator,
+  Linking,
 } from "react-native";
 import {
   Foundation,
@@ -113,7 +115,18 @@ export default function AccountScreen({ navigation }) {
   }, []);
 
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" color="#007BFF" />
+      </View>
+    );
   }
   return (
     <View className="flex-1 bg-white">
@@ -327,7 +340,9 @@ export default function AccountScreen({ navigation }) {
 
         <View className="mt-10 bg-amber-300 rounded-3xl p-3 w-10/12">
           <Text className="font-bold ml-2 mt-1 text-lg">CV Link:</Text>
-          <Text className="ml-2 mt-2">{profile.Profile.CV}</Text>
+          <TouchableOpacity onPress={() => Linking.openURL(profile.Profile.CV)}>
+            <Text className="ml-2 mt-2">Click Here</Text>
+          </TouchableOpacity>
           <View className="items-end">
             <TouchableOpacity
               activeOpacity={0.8}

@@ -5,6 +5,7 @@ import {
   FlatList,
   TouchableOpacity,
   StyleSheet,
+  ActivityIndicator,
 } from "react-native";
 import { Feather, FontAwesome5, FontAwesome } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -52,8 +53,23 @@ export default function BookmarkScreen({ navigation }) {
     return unsubscribe;
   }, [navigation]);
 
+  if (!bookmarks.length) {
+    return <Text>No Data</Text>;
+  }
+
   if (loading) {
-    return <Text>Loading...</Text>;
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <ActivityIndicator size="large" color="#007BFF" />
+      </View>
+    );
   }
 
   const renderItem = ({ item, index }) => (
