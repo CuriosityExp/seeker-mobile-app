@@ -61,26 +61,33 @@ export default function WorkForm({ navigation }) {
                 source={require("../../assets/seeker_black.png")}
                 style={{ height: 150, width: 150, marginTop: 40 }}
               />
+              <Text style={styles.title}>Add Work Experience</Text>
             </View>
             <View className="mt-10">
+              <Text style={styles.label}>Job Name</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Job Name (ex: Fullstack Developer)"
                 value={position}
                 onChangeText={setPosition}
               />
+              <Text style={styles.label}>Company Name</Text>
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Company Name (ex: PT. ABC XYZ)"
                 value={company}
                 onChangeText={setCompany}
               />
+              <Text style={styles.label}>Employment type</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Employment type (ex: Full-time)"
                 value={type}
                 onChangeText={setType}
               />
+              <Text style={styles.label}>Start date</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="Start date (ex: 2018)"
@@ -88,6 +95,8 @@ export default function WorkForm({ navigation }) {
                 onChangeText={setStartWork}
                 keyboardType="numeric"
               />
+              <Text style={styles.label}>End date</Text>
+
               <TextInput
                 className="border border-gray-400 rounded-2xl px-4 py-2 mb-4"
                 placeholder="End date (ex: 2020)"
@@ -95,6 +104,7 @@ export default function WorkForm({ navigation }) {
                 onChangeText={setStopWork}
                 keyboardType="numeric"
               />
+
               <TouchableOpacity
                 activeOpacity={0.8}
                 className="items-center bg-yellow-300 rounded-xl p-4 mt-7"
@@ -119,5 +129,14 @@ const styles = StyleSheet.create({
   inner: {
     padding: 24,
     justifyContent: "space-around",
+  },
+  label: {
+    fontWeight: "bold",
+    marginBottom: 5,
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 25,
+    marginBottom: 10,
   },
 });
