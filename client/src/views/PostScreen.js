@@ -7,6 +7,8 @@ import {
   StyleSheet,
   FlatList,
   ActivityIndicator,
+  Modal,
+  ScrollView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,18 +21,6 @@ export default function PostScreen({ navigation }) {
   // const [profile, setProfile] = useState("");
   const [data, setData] = useState("");
   console.log(data, "ini data post");
-
-  // async function getData() {
-  //   try {
-  //     const { data } = await axios.get(`${baseUrl}/users`, {
-  //       headers: { access_token: await AsyncStorage.getItem("access_token") },
-  //     });
-  //     setProfile(data);
-  //     setLoading(false);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // }
 
   async function getPosts() {
     try {
@@ -67,7 +57,19 @@ export default function PostScreen({ navigation }) {
     postContent,
     desc,
     isLiked,
+    handleLike,
+    todoList,
   }) => {
+    const [isModalVisible, setIsModalVisible] = useState(false);
+
+    const handleShowModal = () => {
+      setIsModalVisible(true);
+    };
+
+    const handleCloseModal = () => {
+      setIsModalVisible(false);
+    };
+    console.log(todoList, ",,,,,,,,,,,,,,,,,");
     return (
       <View style={styles.card}>
         <View style={styles.profileContainer}>
@@ -80,7 +82,7 @@ export default function PostScreen({ navigation }) {
         <Text style={styles.postContent}>{desc}</Text>
         <Text style={styles.postContent}>{postContent}</Text>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.showButton}>
+          <TouchableOpacity style={styles.showButton} onPress={handleShowModal}>
             <Text style={styles.buttonText}>Show Todos</Text>
           </TouchableOpacity>
         </View>
@@ -96,6 +98,36 @@ export default function PostScreen({ navigation }) {
             <Icon name="trash" size={24} color="red" />
           </TouchableOpacity>
         </View>
+
+        {/* Modal */}
+        <Modal
+          visible={isModalVisible}
+          animationType="slide"
+          transparent={true}
+          onRequestClose={handleCloseModal}
+        >
+          <View className="p-10" style={styles.modalContainer}>
+            <ScrollView>
+              <Text className="text-center" style={styles.modalTitle}>
+                Todo List:
+              </Text>
+              {/* Example Todo items */}
+              {todoList.map((el, index) => (
+                <Text key={el._id} style={styles.todoItem}>
+                  {index + 1}. {el.task}
+                </Text>
+              ))}
+              <TouchableOpacity onPress={handleCloseModal}>
+                <Text
+                  className="text-white bg-red-600 w-16 rounded-xl text-center p-2"
+                  style={styles.closeButton}
+                >
+                  Close
+                </Text>
+              </TouchableOpacity>
+            </ScrollView>
+          </View>
+        </Modal>
       </View>
     );
   };
@@ -128,6 +160,7 @@ export default function PostScreen({ navigation }) {
             postContent={item.title}
             desc={item.description}
             isLiked={item.isLiked}
+            todoList={item.todos}
           />
         )}
       />
@@ -190,5 +223,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+    marginBottom: 10,
+  },
+  todoItem: {
+    fontSize: 16,
+    color: "white",
+    marginBottom: 5,
+  },
+  closeButton: {
+    fontSize: 16,
+    marginTop: 10,
   },
 });

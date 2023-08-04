@@ -77,13 +77,14 @@ export default function AccountScreen({ navigation }) {
 
   async function generateCV() {
     try {
-      console.log("Masuk sini <<<")
-      const {data} = await axios({
+      console.log("Masuk sini <<<");
+      const { data } = await axios({
         method: "patch",
         url: `${baseUrl}/cv-generate`,
         headers: { access_token: await AsyncStorage.getItem("access_token") },
       });
-      console.log(data)
+      alert(`CV Generated`);
+      console.log(data);
       getData();
     } catch (error) {
       console.log(error);
@@ -179,7 +180,7 @@ export default function AccountScreen({ navigation }) {
           className="mt-10 bg-amber-300 rounded-3xl p-5 w-10/12"
           style={styles.elevation}
         >
-            <Text style={styles.profile}>Profile</Text>
+          <Text style={styles.profile}>Profile</Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Foundation name="mail" size={24} color="black" />
             <View style={{ marginLeft: 10 }}>
@@ -433,11 +434,11 @@ const styles = StyleSheet.create({
     elevation: 10,
     shadowColor: "#000000",
   },
-  profile:{
+  profile: {
     fontWeight: "bold",
     fontSize: 20,
     marginBottom: 15,
     textAlign: "right",
     marginRight: 5,
-  }
+  },
 });
