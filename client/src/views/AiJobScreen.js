@@ -160,6 +160,7 @@ export default function AiJobScreen({ navigation, route }) {
               padding: 16,
               position: "relative",
               width: 360,
+              marginLeft: 9,
             },
           ]}
         >
